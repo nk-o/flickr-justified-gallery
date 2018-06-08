@@ -42,7 +42,7 @@ fjGallery(document.querySelectorAll('.fj-gallery'), {
 });
 ```
 
-### V. jQuery way
+### B. jQuery way
 ```javascript
 $('.fj-gallery').fjGallery({
     itemSelector: '.fj-gallery-item'
