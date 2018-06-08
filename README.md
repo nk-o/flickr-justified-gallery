@@ -38,14 +38,14 @@ Link directly from [unpkg](https://unpkg.com/)
 ### A. JavaScript way
 ```javascript
 fjGallery(document.querySelectorAll('.fj-gallery'), {
-    speed: 0.2
+    itemSelector: '.fj-gallery-item'
 });
 ```
 
 ### V. jQuery way
 ```javascript
 $('.fj-gallery').fjGallery({
-    speed: 0.2
+    itemSelector: '.fj-gallery-item'
 });
 ```
 
