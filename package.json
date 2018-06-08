@@ -1,0 +1,71 @@
+{
+    "name": "flickr-justified-gallery",
+    "title": "Flickr's Justified Gallery [fjGallery]",
+    "version": "1.0.0",
+    "description": "Flickr's justified images gallery",
+    "license": "MIT",
+    "homepage": "https://github.com/nk-o/flickr-justified-gallery",
+    "author": "nK <https://nkdev.info>",
+    "main": "index.js",
+    "files": [
+        "src",
+        "dist"
+    ],
+    "scripts": {
+        "dev": "gulp dev",
+        "build": "gulp build",
+        "js-lint": "eslint src/",
+        "js-lint-fix": "eslint --fix src/",
+        "precommit": "npm run js-lint",
+        "prepush": "npm run js-lint"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/nk-o/flickr-justified-gallery.git"
+    },
+    "bugs": {
+        "url": "https://github.com/nk-o/flickr-justified-gallery/issues"
+    },
+    "keywords": [
+        "justified",
+        "gallery",
+        "flickr",
+        "images"
+    ],
+    "devDependencies": {
+        "babel": "^6.23.0",
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.4",
+        "babel-preset-env": "^1.6.1",
+        "browser-sync": "^2.23.6",
+        "del": "^3.0.0",
+        "eslint": "^4.18.2",
+        "eslint-config-airbnb": "^16.1.0",
+        "eslint-plugin-import": "^2.9.0",
+        "eslint-plugin-jsx-a11y": "^6.0.3",
+        "eslint-plugin-react": "^7.7.0",
+        "gulp": "^3.9.1",
+        "gulp-header": "^2.0.5",
+        "gulp-if": "^2.0.2",
+        "gulp-load-plugins": "^1.5.0",
+        "gulp-plumber": "^1.2.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-sequence": "^1.0.0",
+        "gulp-sourcemaps": "^2.6.4",
+        "gulp-uglify": "^3.0.0",
+        "gulp-watch": "^5.0.0",
+        "husky": "^0.14.3",
+        "jquery": "^3.3.1",
+        "json-file": "^0.1.0",
+        "vinyl-named": "^1.1.0",
+        "webpack-stream": "^4.0.2"
+    },
+    "dependencies": {
+        "global": "^4.3.2",
+        "justified-layout": "^2.1.1",
+        "lite-ready": "^1.0.4",
+        "merge": "^1.2.0",
+        "rafl": "^1.2.2",
+        "throttle-debounce": "^1.0.1"
+    }
+}
