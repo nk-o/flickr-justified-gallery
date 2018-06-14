@@ -186,31 +186,38 @@ class fjGallery {
             $images = $images.get();
         }
 
+        if (!$images || !$images.length) {
+            return;
+        }
+
         $images.forEach(($item) => {
             // if $images is jQuery, for some reason in this array there is undefined item, that not a DOM,
             // so we need to check for $item.querySelector.
             if ($item && !$item.fjGalleryImage && $item.querySelector) {
                 const $image = $item.querySelector(self.options.imageSelector);
-                $item.fjGalleryImage = self;
-                const data = {
-                    $item,
-                    $image,
-                    width: parseFloat($image.getAttribute('width')) || false,
-                    height: parseFloat($image.getAttribute('height')) || false,
-                    loadSizes() {
-                        const itemData = this;
-                        getImgDemensions($image, (dimensions) => {
-                            if (itemData.width !== dimensions.width || itemData.height !== dimensions.height) {
-                                itemData.width = dimensions.width;
-                                itemData.height = dimensions.height;
-                                self.resize();
-                            }
-                        });
-                    },
-                };
-                data.loadSizes();
 
-                self.images.push(data);
+                if ($image) {
+                    $item.fjGalleryImage = self;
+                    const data = {
+                        $item,
+                        $image,
+                        width: parseFloat($image.getAttribute('width')) || false,
+                        height: parseFloat($image.getAttribute('height')) || false,
+                        loadSizes() {
+                            const itemData = this;
+                            getImgDemensions($image, (dimensions) => {
+                                if (itemData.width !== dimensions.width || itemData.height !== dimensions.height) {
+                                    itemData.width = dimensions.width;
+                                    itemData.height = dimensions.height;
+                                    self.resize();
+                                }
+                            });
+                        },
+                    };
+                    data.loadSizes();
+
+                    self.images.push(data);
+                }
             }
         });
 

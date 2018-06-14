@@ -1,6 +1,6 @@
 /*!
  * Name    : Flickr's Justified Gallery [fjGallery]
- * Version : 1.0.0
+ * Version : 1.0.1
  * Author  : nK <https://nkdev.info>
  * GitHub  : https://github.com/nk-o/flickr-justified-gallery
  */
