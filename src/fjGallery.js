@@ -12,6 +12,27 @@ window.fjGallery.noConflict = function () {
 
 // jQuery support
 if (typeof jQuery !== 'undefined') {
+    // add data to jQuery .data('fjGallery')
+    const oldInit = window.fjGallery.constructor.prototype.init;
+    window.fjGallery.constructor.prototype.init = function () {
+        this.jQcontainer = jQuery(this.$container);
+        this.jQcontainer.data('fjGallery', this);
+        if (oldInit) {
+            oldInit.call(this);
+        }
+    };
+
+    // remove data from jQuery .data('fjGallery')
+    const oldDestroy = window.fjGallery.constructor.prototype.destroy;
+    window.fjGallery.constructor.prototype.destroy = function () {
+        if (this.jQcontainer) {
+            this.jQcontainer.removeData('fjGallery');
+        }
+        if (oldDestroy) {
+            oldDestroy.call(this);
+        }
+    };
+
     const jQueryPlugin = function () {
         const args = arguments || [];
         Array.prototype.unshift.call(args, this);
