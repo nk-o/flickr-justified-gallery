@@ -66,6 +66,6 @@
         "lite-ready": "^1.0.4",
         "merge": "^1.2.0",
         "rafl": "^1.2.2",
-        "throttle-debounce": "^1.0.1"
+        "throttle-debounce": "^2.0.0"
     }
 }

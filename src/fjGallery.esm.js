@@ -1,4 +1,4 @@
-import throttle from 'throttle-debounce/throttle';
+import { throttle } from 'throttle-debounce';
 import merge from 'merge';
 import domReady from 'lite-ready';
 import raf from 'rafl';
