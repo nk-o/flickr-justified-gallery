@@ -102,6 +102,7 @@ class fjGallery {
             rowHeight: 320,
             rowHeightTolerance: 0.25, // [0, 1]
             resizeThrottle: 200,
+            isRtl: self.css(self.$container, 'direction') === 'rtl',
 
             // events
             onInit: null, // function() {}
@@ -267,7 +268,7 @@ class fjGallery {
             if (data.width && data.height) {
                 self.css(data.$item, {
                     position: 'absolute',
-                    transform: `translateX(${justifiedData.boxes[i].left}px) translateY(${justifiedData.boxes[i].top}px) translateZ(0)`,
+                    transform: `translateX(${(self.options.isRtl ? -1 : 1) * justifiedData.boxes[i].left}px) translateY(${justifiedData.boxes[i].top}px) translateZ(0)`,
                     width: `${justifiedData.boxes[i].width}px`,
                     height: `${justifiedData.boxes[i].height}px`,
                 });
