@@ -1,7 +1,6 @@
 import { throttle } from 'throttle-debounce';
 import merge from 'merge';
 import domReady from 'lite-ready';
-import raf from 'rafl';
 import justifiedLayout from 'justified-layout';
 import { window } from 'global';
 
@@ -11,7 +10,7 @@ import { window } from 'global';
 const fjGalleryList = [];
 
 function updateFjGallery() {
-    raf(() => {
+    window.requestAnimationFrame(() => {
         fjGalleryList.forEach((item) => {
             item.resize();
         });
