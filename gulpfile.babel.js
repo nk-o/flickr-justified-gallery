@@ -4,7 +4,9 @@ const del = require('del');
 const browserSync = require('browser-sync');
 const named = require('vinyl-named');
 const webpack = require('webpack-stream');
-const data = require('json-file').read('./package.json').data;
+const {
+    data,
+} = require('json-file').read('./package.json');
 
 function getMainHeader() {
     return `/*!
@@ -20,6 +22,7 @@ function getMainHeader() {
  * Error Handler for gulp-plumber
  */
 function errorHandler(err) {
+    // eslint-disable-next-line no-console
     console.error(err);
     this.emit('end');
 }
@@ -32,20 +35,17 @@ gulp.task('clean', () => del(['dist']));
 /**
  * JS Task
  */
-gulp.task('js', () => {
-    return gulp.src(['src/*.js', '!src/*.esm.js'])
+gulp.task('js', () => (
+    gulp.src(['src/*.js', '!src/*.esm.js'])
         .pipe($.plumber({ errorHandler }))
         .pipe(named())
         .pipe(webpack({
+            mode: 'none',
             module: {
-                loaders: [
-                    {
-                        test: /\.js$/,
-                        use: [{
-                            loader: 'babel-loader',
-                        }],
-                    },
-                ],
+                rules: [{
+                    test: /\.js$/,
+                    loader: 'babel-loader',
+                }],
             },
         }))
         .pipe($.header(getMainHeader()))
@@ -58,17 +58,17 @@ gulp.task('js', () => {
         }))
         .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest('dist'))
-        .pipe(browserSync.stream());
-});
+        .pipe(browserSync.stream())
+));
 
 /**
  * CSS Task
  */
-gulp.task('css', () => {
-    return gulp.src('src/*.css')
+gulp.task('css', () => (
+    gulp.src('src/*.css')
         .pipe(gulp.dest('dist'))
-        .pipe(browserSync.stream());
-});
+        .pipe(browserSync.stream())
+));
 
 
 /**
@@ -86,7 +86,7 @@ gulp.task('browser_sync', () => {
  * Watch Task
  */
 gulp.task('dev', () => {
-    $.sequence('browser_sync', 'build', () => {
+    gulp.series('browser_sync', 'build')(() => {
         gulp.watch('src/*.js', ['js']);
         gulp.watch('src/*.css', ['css']);
     });
@@ -96,7 +96,9 @@ gulp.task('dev', () => {
  * Build (default) Task
  */
 gulp.task('build', (cb) => {
-    $.sequence('clean', ['js', 'css'], cb);
+    gulp.series('clean', 'js', 'css')(cb);
 });
 
-gulp.task('default', ['build']);
+gulp.task('default', (cb) => {
+    gulp.series('build')(cb);
+});
