@@ -28,7 +28,7 @@ domReady(() => {
 
 // get image dimensions
 // thanks https://gist.github.com/dimsemenov/5382856
-function getImgDemensions(img, cb) {
+function getImgDimensions(img, cb) {
     let interval;
     let hasSize = false;
     let addedListeners = false;
@@ -205,7 +205,7 @@ class fjGallery {
                         height: parseFloat($image.getAttribute('height')) || false,
                         loadSizes() {
                             const itemData = this;
-                            getImgDemensions($image, (dimensions) => {
+                            getImgDimensions($image, (dimensions) => {
                                 if (itemData.width !== dimensions.width || itemData.height !== dimensions.height) {
                                     itemData.width = dimensions.width;
                                     itemData.height = dimensions.height;
