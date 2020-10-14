@@ -1,4 +1,5 @@
 import { throttle } from 'throttle-debounce';
+import rafSchd from 'raf-schd';
 import merge from 'merge';
 import domReady from 'lite-ready';
 import justifiedLayout from 'justified-layout';
@@ -126,6 +127,7 @@ class fjGallery {
 
         // throttle for resize
         self.resize = throttle(self.options.resizeThrottle, self.resize);
+        self.justify = rafSchd(self.justify);
 
         self.init();
     }

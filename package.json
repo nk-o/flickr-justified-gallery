@@ -65,6 +65,7 @@
         "justified-layout": "^4.0.0",
         "lite-ready": "^1.0.4",
         "merge": "^1.2.1",
+        "raf-schd": "^4.0.2",
         "throttle-debounce": "^2.3.0"
     }
 }
