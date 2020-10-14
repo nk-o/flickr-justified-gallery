@@ -1,6 +1,6 @@
 /*!
  * Name    : Flickr's Justified Gallery [fjGallery]
- * Version : 1.0.3
+ * Version : 1.0.4
  * Author  : nK <https://nkdev.info>
  * GitHub  : https://github.com/nk-o/flickr-justified-gallery
  */
@@ -242,14 +242,16 @@ module.exports = g;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
-/* harmony import */ var merge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
-/* harmony import */ var merge__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(merge__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
-/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lite_ready__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var justified_layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9);
-/* harmony import */ var justified_layout__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(justified_layout__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3);
-/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(global__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(throttle_debounce__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var raf_schd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
+/* harmony import */ var merge__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
+/* harmony import */ var merge__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(merge__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
+/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lite_ready__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var justified_layout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10);
+/* harmony import */ var justified_layout__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(justified_layout__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3);
+/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(global__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -262,23 +264,24 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
  // list with all fjGallery instances
 // need to render all in one scroll/resize event
 
 var fjGalleryList = [];
 
 function updateFjGallery() {
-  global__WEBPACK_IMPORTED_MODULE_4__["window"].requestAnimationFrame(function () {
+  global__WEBPACK_IMPORTED_MODULE_5__["window"].requestAnimationFrame(function () {
     fjGalleryList.forEach(function (item) {
       item.resize();
     });
   });
 }
 
-global__WEBPACK_IMPORTED_MODULE_4__["window"].addEventListener('resize', updateFjGallery);
-global__WEBPACK_IMPORTED_MODULE_4__["window"].addEventListener('orientationchange', updateFjGallery);
-global__WEBPACK_IMPORTED_MODULE_4__["window"].addEventListener('load', updateFjGallery);
-lite_ready__WEBPACK_IMPORTED_MODULE_2___default()(function () {
+global__WEBPACK_IMPORTED_MODULE_5__["window"].addEventListener('resize', updateFjGallery);
+global__WEBPACK_IMPORTED_MODULE_5__["window"].addEventListener('orientationchange', updateFjGallery);
+global__WEBPACK_IMPORTED_MODULE_5__["window"].addEventListener('load', updateFjGallery);
+lite_ready__WEBPACK_IMPORTED_MODULE_3___default()(function () {
   updateFjGallery();
 }); // get image dimensions
 // thanks https://gist.github.com/dimsemenov/5382856
@@ -383,10 +386,11 @@ var fjGallery = /*#__PURE__*/function () {
         pureDataOptions[loweCaseOption] = dataOptions[key];
       }
     });
-    self.options = merge__WEBPACK_IMPORTED_MODULE_1___default()({}, self.defaults, pureDataOptions, userOptions);
-    self.pureOptions = merge__WEBPACK_IMPORTED_MODULE_1___default()({}, self.options); // throttle for resize
+    self.options = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.defaults, pureDataOptions, userOptions);
+    self.pureOptions = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.options); // throttle for resize
 
     self.resize = Object(throttle_debounce__WEBPACK_IMPORTED_MODULE_0__["throttle"])(self.options.resizeThrottle, self.resize);
+    self.justify = Object(raf_schd__WEBPACK_IMPORTED_MODULE_1__["default"])(self.justify);
     self.init();
   } // add styles to element
 
@@ -395,7 +399,7 @@ var fjGallery = /*#__PURE__*/function () {
     key: "css",
     value: function css(el, styles) {
       if (typeof styles === 'string') {
-        return global__WEBPACK_IMPORTED_MODULE_4__["window"].getComputedStyle(el).getPropertyValue(styles);
+        return global__WEBPACK_IMPORTED_MODULE_5__["window"].getComputedStyle(el).getPropertyValue(styles);
       } // add transform property with vendor prefix
 
 
@@ -443,7 +447,7 @@ var fjGallery = /*#__PURE__*/function () {
     value: function appendImages($images) {
       var self = this; // check if jQuery
 
-      if (global__WEBPACK_IMPORTED_MODULE_4__["window"].jQuery && $images instanceof global__WEBPACK_IMPORTED_MODULE_4__["window"].jQuery) {
+      if (global__WEBPACK_IMPORTED_MODULE_5__["window"].jQuery && $images instanceof global__WEBPACK_IMPORTED_MODULE_5__["window"].jQuery) {
         $images = $images.get();
       }
 
@@ -503,7 +507,7 @@ var fjGallery = /*#__PURE__*/function () {
           justifyArray.push(data.width / data.height);
         }
       });
-      var justifiedData = justified_layout__WEBPACK_IMPORTED_MODULE_3___default()(justifyArray, {
+      var justifiedData = justified_layout__WEBPACK_IMPORTED_MODULE_4___default()(justifyArray, {
         containerWidth: self.$container.getBoundingClientRect().width,
         containerPadding: {
           top: parseFloat(self.css(self.$container, 'padding-top')) || 0,
@@ -540,7 +544,7 @@ var fjGallery = /*#__PURE__*/function () {
     key: "updateOptions",
     value: function updateOptions(options) {
       var self = this;
-      self.options = merge__WEBPACK_IMPORTED_MODULE_1___default()({}, self.options, options);
+      self.options = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.options, options);
       self.justify();
     }
   }, {
@@ -621,155 +625,207 @@ plugin.constructor = fjGallery;
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+(function (global, factory) {
+  ( false ? undefined : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? factory(exports) :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : (undefined);
+})(this, function (exports) {
+  'use strict';
+  /* eslint-disable no-undefined,no-param-reassign,no-shadow */
+
+  /**
+   * Throttle execution of a function. Especially useful for rate limiting
+   * execution of handlers on events like resize and scroll.
+   *
+   * @param  {number}    delay -          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+   * @param  {boolean}   [noTrailing] -   Optional, defaults to false. If noTrailing is true, callback will only execute every `delay` milliseconds while the
+   *                                    throttled-function is being called. If noTrailing is false or unspecified, callback will be executed one final time
+   *                                    after the last throttled-function call. (After the throttled-function has not been called for `delay` milliseconds,
+   *                                    the internal counter is reset).
+   * @param  {Function}  callback -       A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+   *                                    to `callback` when the throttled-function is executed.
+   * @param  {boolean}   [debounceMode] - If `debounceMode` is true (at begin), schedule `clear` to execute after `delay` ms. If `debounceMode` is false (at end),
+   *                                    schedule `callback` to execute after `delay` ms.
+   *
+   * @returns {Function}  A new, throttled, function.
+   */
+
+  function throttle(delay, noTrailing, callback, debounceMode) {
+    /*
+     * After wrapper has stopped being called, this timeout ensures that
+     * `callback` is executed at the proper times in `throttle` and `end`
+     * debounce modes.
+     */
+    var timeoutID;
+    var cancelled = false; // Keep track of the last time `callback` was executed.
+
+    var lastExec = 0; // Function to clear existing timeout
+
+    function clearExistingTimeout() {
+      if (timeoutID) {
+        clearTimeout(timeoutID);
+      }
+    } // Function to cancel next exec
+
+
+    function cancel() {
+      clearExistingTimeout();
+      cancelled = true;
+    } // `noTrailing` defaults to falsy.
+
+
+    if (typeof noTrailing !== 'boolean') {
+      debounceMode = callback;
+      callback = noTrailing;
+      noTrailing = undefined;
+    }
+    /*
+     * The `wrapper` function encapsulates all of the throttling / debouncing
+     * functionality and when executed will limit the rate at which `callback`
+     * is executed.
+     */
+
+
+    function wrapper() {
+      for (var _len = arguments.length, arguments_ = new Array(_len), _key = 0; _key < _len; _key++) {
+        arguments_[_key] = arguments[_key];
+      }
+
+      var self = this;
+      var elapsed = Date.now() - lastExec;
+
+      if (cancelled) {
+        return;
+      } // Execute `callback` and update the `lastExec` timestamp.
+
+
+      function exec() {
+        lastExec = Date.now();
+        callback.apply(self, arguments_);
+      }
+      /*
+       * If `debounceMode` is true (at begin) this is used to clear the flag
+       * to allow future `callback` executions.
+       */
+
+
+      function clear() {
+        timeoutID = undefined;
+      }
+
+      if (debounceMode && !timeoutID) {
+        /*
+         * Since `wrapper` is being called for the first time and
+         * `debounceMode` is true (at begin), execute `callback`.
+         */
+        exec();
+      }
+
+      clearExistingTimeout();
+
+      if (debounceMode === undefined && elapsed > delay) {
+        /*
+         * In throttle mode, if `delay` time has been exceeded, execute
+         * `callback`.
+         */
+        exec();
+      } else if (noTrailing !== true) {
+        /*
+         * In trailing throttle mode, since `delay` time has not been
+         * exceeded, schedule `callback` to execute `delay` ms after most
+         * recent execution.
+         *
+         * If `debounceMode` is true (at begin), schedule `clear` to execute
+         * after `delay` ms.
+         *
+         * If `debounceMode` is false (at end), schedule `callback` to
+         * execute after `delay` ms.
+         */
+        timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
+      }
+    }
+
+    wrapper.cancel = cancel; // Return the wrapper function.
+
+    return wrapper;
+  }
+  /* eslint-disable no-undefined */
+
+  /**
+   * Debounce execution of a function. Debouncing, unlike throttling,
+   * guarantees that a function is only executed a single time, either at the
+   * very beginning of a series of calls, or at the very end.
+   *
+   * @param  {number}   delay -         A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+   * @param  {boolean}  [atBegin] -     Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
+   *                                  after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
+   *                                  (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
+   * @param  {Function} callback -      A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+   *                                  to `callback` when the debounced-function is executed.
+   *
+   * @returns {Function} A new, debounced function.
+   */
+
+
+  function debounce(delay, atBegin, callback) {
+    return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
+  }
+
+  exports.debounce = debounce;
+  exports.throttle = throttle;
+  Object.defineProperty(exports, '__esModule', {
+    value: true
+  });
+});
+
+/***/ }),
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "debounce", function() { return debounce; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "throttle", function() { return throttle; });
-/* eslint-disable no-undefined,no-param-reassign,no-shadow */
+var rafSchd = function rafSchd(fn) {
+  var lastArgs = [];
+  var frameId = null;
 
-/**
- * Throttle execution of a function. Especially useful for rate limiting
- * execution of handlers on events like resize and scroll.
- *
- * @param  {number}    delay -          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
- * @param  {boolean}   [noTrailing] -   Optional, defaults to false. If noTrailing is true, callback will only execute every `delay` milliseconds while the
- *                                    throttled-function is being called. If noTrailing is false or unspecified, callback will be executed one final time
- *                                    after the last throttled-function call. (After the throttled-function has not been called for `delay` milliseconds,
- *                                    the internal counter is reset).
- * @param  {Function}  callback -       A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
- *                                    to `callback` when the throttled-function is executed.
- * @param  {boolean}   [debounceMode] - If `debounceMode` is true (at begin), schedule `clear` to execute after `delay` ms. If `debounceMode` is false (at end),
- *                                    schedule `callback` to execute after `delay` ms.
- *
- * @returns {Function}  A new, throttled, function.
- */
-function throttle(delay, noTrailing, callback, debounceMode) {
-  /*
-   * After wrapper has stopped being called, this timeout ensures that
-   * `callback` is executed at the proper times in `throttle` and `end`
-   * debounce modes.
-   */
-  var timeoutID;
-  var cancelled = false; // Keep track of the last time `callback` was executed.
-
-  var lastExec = 0; // Function to clear existing timeout
-
-  function clearExistingTimeout() {
-    if (timeoutID) {
-      clearTimeout(timeoutID);
-    }
-  } // Function to cancel next exec
-
-
-  function cancel() {
-    clearExistingTimeout();
-    cancelled = true;
-  } // `noTrailing` defaults to falsy.
-
-
-  if (typeof noTrailing !== 'boolean') {
-    debounceMode = callback;
-    callback = noTrailing;
-    noTrailing = undefined;
-  }
-  /*
-   * The `wrapper` function encapsulates all of the throttling / debouncing
-   * functionality and when executed will limit the rate at which `callback`
-   * is executed.
-   */
-
-
-  function wrapper() {
-    for (var _len = arguments.length, arguments_ = new Array(_len), _key = 0; _key < _len; _key++) {
-      arguments_[_key] = arguments[_key];
+  var wrapperFn = function wrapperFn() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
     }
 
-    var self = this;
-    var elapsed = Date.now() - lastExec;
+    lastArgs = args;
 
-    if (cancelled) {
+    if (frameId) {
       return;
-    } // Execute `callback` and update the `lastExec` timestamp.
-
-
-    function exec() {
-      lastExec = Date.now();
-      callback.apply(self, arguments_);
-    }
-    /*
-     * If `debounceMode` is true (at begin) this is used to clear the flag
-     * to allow future `callback` executions.
-     */
-
-
-    function clear() {
-      timeoutID = undefined;
     }
 
-    if (debounceMode && !timeoutID) {
-      /*
-       * Since `wrapper` is being called for the first time and
-       * `debounceMode` is true (at begin), execute `callback`.
-       */
-      exec();
+    frameId = requestAnimationFrame(function () {
+      frameId = null;
+      fn.apply(void 0, lastArgs);
+    });
+  };
+
+  wrapperFn.cancel = function () {
+    if (!frameId) {
+      return;
     }
 
-    clearExistingTimeout();
+    cancelAnimationFrame(frameId);
+    frameId = null;
+  };
 
-    if (debounceMode === undefined && elapsed > delay) {
-      /*
-       * In throttle mode, if `delay` time has been exceeded, execute
-       * `callback`.
-       */
-      exec();
-    } else if (noTrailing !== true) {
-      /*
-       * In trailing throttle mode, since `delay` time has not been
-       * exceeded, schedule `callback` to execute `delay` ms after most
-       * recent execution.
-       *
-       * If `debounceMode` is true (at begin), schedule `clear` to execute
-       * after `delay` ms.
-       *
-       * If `debounceMode` is false (at end), schedule `callback` to
-       * execute after `delay` ms.
-       */
-      timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
-    }
-  }
+  return wrapperFn;
+};
 
-  wrapper.cancel = cancel; // Return the wrapper function.
-
-  return wrapper;
-}
-/* eslint-disable no-undefined */
-
-/**
- * Debounce execution of a function. Debouncing, unlike throttling,
- * guarantees that a function is only executed a single time, either at the
- * very beginning of a series of calls, or at the very end.
- *
- * @param  {number}   delay -         A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
- * @param  {boolean}  [atBegin] -     Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
- *                                  after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
- *                                  (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
- * @param  {Function} callback -      A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
- *                                  to `callback` when the debounced-function is executed.
- *
- * @returns {Function} A new, debounced function.
- */
-
-
-function debounce(delay, atBegin, callback) {
-  return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
-}
-
-
+/* harmony default export */ __webpack_exports__["default"] = (rafSchd);
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -909,10 +965,10 @@ function debounce(delay, atBegin, callback) {
     window[publicName] = Public;
   }
 })(( false ? undefined : _typeof(module)) === 'object' && module && _typeof(module.exports) === 'object' && module.exports);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(8)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9)(module)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = function (module) {
@@ -941,7 +997,7 @@ module.exports = function (module) {
 };
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -952,8 +1008,8 @@ module.exports = function (module) {
  */
 
 
-var merge = __webpack_require__(7),
-    Row = __webpack_require__(10);
+var merge = __webpack_require__(8),
+    Row = __webpack_require__(11);
 /**
  * Create a new, empty row.
  *
@@ -1172,7 +1228,7 @@ module.exports = function (input, config) {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -1180,7 +1236,7 @@ module.exports = function (input, config) {
  * Licensed under the terms of the MIT license. Please see LICENSE file in the project root for terms.
  * @license
  */
-var merge = __webpack_require__(7);
+var merge = __webpack_require__(8);
 /**
  * Row
  * Wrapper for each row in a justified layout.
