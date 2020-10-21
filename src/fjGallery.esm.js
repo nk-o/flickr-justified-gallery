@@ -127,7 +127,7 @@ class fjGallery {
 
         // throttle for resize
         self.resize = throttle(self.options.resizeThrottle, self.resize);
-        self.justify = rafSchd(self.justify);
+        self.justify = rafSchd(self.justify.bind(self));
 
         self.init();
     }
