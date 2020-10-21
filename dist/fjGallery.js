@@ -1,6 +1,6 @@
 /*!
  * Name    : Flickr's Justified Gallery [fjGallery]
- * Version : 1.0.4
+ * Version : 1.0.5
  * Author  : nK <https://nkdev.info>
  * GitHub  : https://github.com/nk-o/flickr-justified-gallery
  */
@@ -390,7 +390,7 @@ var fjGallery = /*#__PURE__*/function () {
     self.pureOptions = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.options); // throttle for resize
 
     self.resize = Object(throttle_debounce__WEBPACK_IMPORTED_MODULE_0__["throttle"])(self.options.resizeThrottle, self.resize);
-    self.justify = Object(raf_schd__WEBPACK_IMPORTED_MODULE_1__["default"])(self.justify);
+    self.justify = Object(raf_schd__WEBPACK_IMPORTED_MODULE_1__["default"])(self.justify.bind(self));
     self.init();
   } // add styles to element
 
