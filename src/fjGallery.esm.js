@@ -295,6 +295,11 @@ class fjGallery {
             }
         });
 
+        // increase additional offset based on the latest row items height.
+        if (self.options.calculateItemsHeight && Object.keys(rowsMaxHeight).length) {
+            additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[justifiedData.boxes.length - 1].height;
+        }
+
         // Set container height.
         self.css(self.$container, {
             height: `${justifiedData.containerHeight + additionalTopOffset}px`,
