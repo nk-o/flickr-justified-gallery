@@ -1,4 +1,5 @@
-## Flickr's Justified Gallery
+# Flickr's Justified Gallery
+
 Flickr justified images gallery based on [https://github.com/flickr/justified-layout](https://github.com/flickr/justified-layout).
 
 ## [Demo](https://free.nkdev.info/flickr-justified-gallery/)
@@ -6,29 +7,39 @@ Flickr justified images gallery based on [https://github.com/flickr/justified-la
 ## Getting Started
 
 ### ES6
+
 `npm install flickr-justified-gallery --save`
+
 ```javascript
 import fjGallery from 'flickr-justified-gallery';
 ```
 
 ### Browser
+
 ```html
 <script src="flickr-justified-gallery/dist/fjGallery.min.js"></script>
 <link href="flickr-justified-gallery/dist/fjGallery/fjGallery.css" rel="stylesheet">
 ```
 
 #### CDN
+
 Link directly from [unpkg](https://unpkg.com/)
+
 ```html
 <script src="https://unpkg.com/flickr-justified-gallery@1/dist/fjGallery.min.js"></script>
 <link href="https://unpkg.com/flickr-justified-gallery@1/dist/fjGallery.css" rel="stylesheet">
 ```
 
 ## Set up your HTML
+
 ```html
 <div class="fj-gallery">
-    <img src="<image_url_here>" alt="" width="200" height="200">
-    <img src="<image_url_here>" alt="" width="200" height="200">
+    <div class="fj-gallery-item">
+        <img src="<image_url_here>" alt="" width="200" height="200">
+    </div>
+    <div class="fj-gallery-item">
+        <img src="<image_url_here>" alt="" width="200" height="200">
+    </div>
     ...
 </div>
 ```
@@ -36,6 +47,7 @@ Link directly from [unpkg](https://unpkg.com/)
 ## Call the plugin
 
 ### A. JavaScript way
+
 ```javascript
 fjGallery(document.querySelectorAll('.fj-gallery'), {
     itemSelector: '.fj-gallery-item'
@@ -43,24 +55,25 @@ fjGallery(document.querySelectorAll('.fj-gallery'), {
 ```
 
 ### B. jQuery way
+
 ```javascript
 $('.fj-gallery').fjGallery({
     itemSelector: '.fj-gallery-item'
 });
 ```
 
-## Want WordPress Plugin?
+## WordPress Plugin
 
 [![Visual Portfolio](https://a.nkdev.info/visual-portfolio/preview.jpg)](https://wordpress.org/plugins/visual-portfolio/)
 
 We made WordPress plugin to easily create portfolios and image galleries in your blog with masonry, tiles and Flickr's justified gallery layouts.
 
-Demo: https://wp.nkdev.info/free-visual-portfolio/
+Demo: <https://wp.nkdev.info/free-visual-portfolio/>
 
-Download: https://nkdev.info/downloads/visual-portfolio/
-
+Download: <https://nkdev.info/downloads/visual-portfolio/>
 
 ## Options
+
 Name | Type | Default | Description
 :--- | :--- | :------ | :----------
 itemSelector | string | `.fj-gallery-item` | Items selector.
@@ -71,6 +84,7 @@ rowHeightTolerance | float | `0.25` | How far row heights can stray from `rowHei
 resizeDebounce | int | `100` | Window resize debounce timeout in `ms`.
 
 ## Events
+
 Events used the same way as Options.
 
 Name | Description
@@ -81,8 +95,8 @@ onAppendImages | Called after appended new images (available 1 argument with ima
 onBeforeJustify | Called before justification algorythm start working.
 onJustify | Called after images justified.
 
-
 ## Methods
+
 Name | Result | Description
 :--- | :----- | :----------
 resize | - | Justify images and container. Called on window resize and load.
@@ -91,38 +105,39 @@ updateOptions | - | Update current gallery options and recalculate it, required 
 destroy | - | Destroy fjGallery and set block as it was before plugin init.
 
 ### Call methods example
-#### A. JavaScript way
-```javascript
-fjGallery(document.querySelectorAll('.fj-gallery'), 'destroy');
-```
 
-#### B. jQuery way
 ```javascript
+// Javascript
+fjGallery(document.querySelectorAll('.fj-gallery'), 'destroy');
+
+// jQuery
 $('.fj-gallery').fjGallery('destroy');
 ```
 
-
 ## No conflict
-If you already have global ***fjGallery*** variable or ***jQuery.fn.fjGallery***, you can rename plugin.
-### A. JavaScript way
-```javascript
-var newFjGallery = fjGallery.noConflict();
-```
 
-### B. jQuery way
+If you already have global ***fjGallery*** variable or ***jQuery.fn.fjGallery***, you can rename plugin.
+
 ```javascript
+// JavaScript:
+var newFjGallery = fjGallery.noConflict();
+
+// jQuery:
 jQuery.fn.newFjGallery = jQuery.fn.fjGallery.noConflict();
 ```
 
 ## For Developers
 
 ### Installation
+
 * Run `npm install` in the command line. Or if you need to update some dependencies, run `npm update`
 
 ### Building
+
 * `npm run dev` to run build and start local server with files watcher
 * `npm run build` to run build
 
 ### Linting
+
 * `npm run js-lint` to show eslint errors
 * `npm run js-lint-fix` to automatically fix some of the eslint errors
