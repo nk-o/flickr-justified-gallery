@@ -5,16 +5,15 @@ import domReady from 'lite-ready';
 import justifiedLayout from 'justified-layout';
 import { window } from 'global';
 
-
 // list with all fjGallery instances
 // need to render all in one scroll/resize event
 const fjGalleryList = [];
 
-const updateFjGallery = rafSchd( () => {
+const updateFjGallery = rafSchd(() => {
     fjGalleryList.forEach((item) => {
         item.resize();
     });
-} );
+});
 
 window.addEventListener('resize', updateFjGallery);
 window.addEventListener('orientationchange', updateFjGallery);
@@ -22,7 +21,6 @@ window.addEventListener('load', updateFjGallery);
 domReady(() => {
     updateFjGallery();
 });
-
 
 // get image dimensions
 // thanks https://gist.github.com/dimsemenov/5382856
@@ -79,7 +77,6 @@ function getImgDimensions(img, cb) {
     }
 }
 
-
 let instanceID = 0;
 
 // fjGallery class
@@ -99,6 +96,7 @@ class fjGallery {
             gutter: 10, // supports object like `{ horizontal: 10, vertical: 10 }`.
             rowHeight: 320,
             rowHeightTolerance: 0.25, // [0, 1]
+            calculateItemsHeight: false,
             resizeDebounce: 100,
             isRtl: self.css(self.$container, 'direction') === 'rtl',
 
@@ -123,7 +121,8 @@ class fjGallery {
         self.options = merge({}, self.defaults, pureDataOptions, userOptions);
 
         // deprecated resizeThrottle option.
-        if ('undefined' !== typeof self.options.resizeThrottle) {
+        if (typeof self.options.resizeThrottle !== 'undefined') {
+            // eslint-disable-next-line no-console
             console.warning('`resizeThrottle` option is deprecated, use `resizeDebounce` instead');
             self.options.resizeDebounce = self.options.resizeThrottle;
         }
@@ -265,21 +264,40 @@ class fjGallery {
             targetRowHeightTolerance: self.options.rowHeightTolerance,
         });
 
-        self.css(self.$container, {
-            height: `${justifiedData.containerHeight}px`,
-        });
-
         let i = 0;
-        self.images.forEach((data) => {
+        let additionalTopOffset = 0;
+        const rowsMaxHeight = {};
+
+        // Set image sizes.
+        self.images.forEach((data, imgI) => {
             if (data.width && data.height) {
+                // calculate additional offset based on actual items height.
+                if (self.options.calculateItemsHeight && typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' && Object.keys(rowsMaxHeight).length) {
+                    additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[imgI - 1].height;
+                }
+
                 self.css(data.$item, {
                     position: 'absolute',
-                    transform: `translateX(${(self.options.isRtl ? -1 : 1) * justifiedData.boxes[i].left}px) translateY(${justifiedData.boxes[i].top}px) translateZ(0)`,
+                    transform: `translateX(${(self.options.isRtl ? -1 : 1) * justifiedData.boxes[i].left}px) translateY(${justifiedData.boxes[i].top + additionalTopOffset}px) translateZ(0)`,
                     width: `${justifiedData.boxes[i].width}px`,
-                    height: `${justifiedData.boxes[i].height}px`,
                 });
+
+                // calculate actual items height.
+                if (self.options.calculateItemsHeight) {
+                    const rect = data.$item.getBoundingClientRect();
+
+                    if (typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' || rowsMaxHeight[justifiedData.boxes[i].top] < rect.height) {
+                        rowsMaxHeight[justifiedData.boxes[i].top] = rect.height;
+                    }
+                }
+
                 i++;
             }
+        });
+
+        // Set container height.
+        self.css(self.$container, {
+            height: `${justifiedData.containerHeight + additionalTopOffset}px`,
         });
 
         // call onJustify event
@@ -333,7 +351,6 @@ class fjGallery {
         self.justify();
     }
 }
-
 
 // global definition
 const plugin = function (items) {
