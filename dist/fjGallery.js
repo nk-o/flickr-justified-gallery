@@ -1,6 +1,6 @@
 /*!
  * Name    : Flickr's Justified Gallery [fjGallery]
- * Version : 1.0.5
+ * Version : 1.0.6
  * Author  : nK <https://nkdev.info>
  * GitHub  : https://github.com/nk-o/flickr-justified-gallery
  */
@@ -269,15 +269,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 // need to render all in one scroll/resize event
 
 var fjGalleryList = [];
-
-function updateFjGallery() {
-  global__WEBPACK_IMPORTED_MODULE_5__["window"].requestAnimationFrame(function () {
-    fjGalleryList.forEach(function (item) {
-      item.resize();
-    });
+var updateFjGallery = Object(raf_schd__WEBPACK_IMPORTED_MODULE_1__["default"])(function () {
+  fjGalleryList.forEach(function (item) {
+    item.resize();
   });
-}
-
+});
 global__WEBPACK_IMPORTED_MODULE_5__["window"].addEventListener('resize', updateFjGallery);
 global__WEBPACK_IMPORTED_MODULE_5__["window"].addEventListener('orientationchange', updateFjGallery);
 global__WEBPACK_IMPORTED_MODULE_5__["window"].addEventListener('load', updateFjGallery);
@@ -362,7 +358,8 @@ var fjGallery = /*#__PURE__*/function () {
       rowHeight: 320,
       rowHeightTolerance: 0.25,
       // [0, 1]
-      resizeThrottle: 200,
+      calculateItemsHeight: false,
+      resizeDebounce: 100,
       isRtl: self.css(self.$container, 'direction') === 'rtl',
       // events
       onInit: null,
@@ -386,10 +383,17 @@ var fjGallery = /*#__PURE__*/function () {
         pureDataOptions[loweCaseOption] = dataOptions[key];
       }
     });
-    self.options = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.defaults, pureDataOptions, userOptions);
-    self.pureOptions = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.options); // throttle for resize
+    self.options = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.defaults, pureDataOptions, userOptions); // deprecated resizeThrottle option.
 
-    self.resize = Object(throttle_debounce__WEBPACK_IMPORTED_MODULE_0__["throttle"])(self.options.resizeThrottle, self.resize);
+    if (typeof self.options.resizeThrottle !== 'undefined') {
+      // eslint-disable-next-line no-console
+      console.warning('`resizeThrottle` option is deprecated, use `resizeDebounce` instead');
+      self.options.resizeDebounce = self.options.resizeThrottle;
+    }
+
+    self.pureOptions = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.options); // debounce for resize
+
+    self.resize = Object(throttle_debounce__WEBPACK_IMPORTED_MODULE_0__["debounce"])(self.options.resizeDebounce, self.resize);
     self.justify = Object(raf_schd__WEBPACK_IMPORTED_MODULE_1__["default"])(self.justify.bind(self));
     self.init();
   } // add styles to element
@@ -519,20 +523,37 @@ var fjGallery = /*#__PURE__*/function () {
         targetRowHeight: self.options.rowHeight,
         targetRowHeightTolerance: self.options.rowHeightTolerance
       });
-      self.css(self.$container, {
-        height: "".concat(justifiedData.containerHeight, "px")
-      });
       var i = 0;
-      self.images.forEach(function (data) {
+      var additionalTopOffset = 0;
+      var rowsMaxHeight = {}; // Set image sizes.
+
+      self.images.forEach(function (data, imgI) {
         if (data.width && data.height) {
+          // calculate additional offset based on actual items height.
+          if (self.options.calculateItemsHeight && typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' && Object.keys(rowsMaxHeight).length) {
+            additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[imgI - 1].height;
+          }
+
           self.css(data.$item, {
             position: 'absolute',
-            transform: "translateX(".concat((self.options.isRtl ? -1 : 1) * justifiedData.boxes[i].left, "px) translateY(").concat(justifiedData.boxes[i].top, "px) translateZ(0)"),
-            width: "".concat(justifiedData.boxes[i].width, "px"),
-            height: "".concat(justifiedData.boxes[i].height, "px")
-          });
+            transform: "translateX(".concat((self.options.isRtl ? -1 : 1) * justifiedData.boxes[i].left, "px) translateY(").concat(justifiedData.boxes[i].top + additionalTopOffset, "px) translateZ(0)"),
+            width: "".concat(justifiedData.boxes[i].width, "px")
+          }); // calculate actual items height.
+
+          if (self.options.calculateItemsHeight) {
+            var rect = data.$item.getBoundingClientRect();
+
+            if (typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' || rowsMaxHeight[justifiedData.boxes[i].top] < rect.height) {
+              rowsMaxHeight[justifiedData.boxes[i].top] = rect.height;
+            }
+          }
+
           i++;
         }
+      }); // Set container height.
+
+      self.css(self.$container, {
+        height: "".concat(justifiedData.containerHeight + additionalTopOffset, "px")
       }); // call onJustify event
 
       if (self.options.onJustify) {
