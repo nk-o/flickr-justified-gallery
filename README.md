@@ -64,11 +64,11 @@ $('.fj-gallery').fjGallery({
 
 ## WordPress Plugin
 
-[![Visual Portfolio](https://a.nkdev.info/visual-portfolio/preview.jpg)](https://wordpress.org/plugins/visual-portfolio/)
+[![Visual Portfolio](https://a.nkdev.info/visual-portfolio/preview.jpg?v=2)](https://visualportfolio.co/)
 
 We made WordPress plugin to easily create portfolios and image galleries in your blog with masonry, tiles and Flickr's justified gallery layouts.
 
-Demo: <https://wp.nkdev.info/free-visual-portfolio/>
+Demo: <https://visualportfolio.co/>
 
 Download: <https://nkdev.info/downloads/visual-portfolio/>
 
