@@ -10,13 +10,11 @@ import { window } from 'global';
 // need to render all in one scroll/resize event
 const fjGalleryList = [];
 
-function updateFjGallery() {
-    window.requestAnimationFrame(() => {
-        fjGalleryList.forEach((item) => {
-            item.resize();
-        });
+const updateFjGallery = rafSchd( () => {
+    fjGalleryList.forEach((item) => {
+        item.resize();
     });
-}
+} );
 
 window.addEventListener('resize', updateFjGallery);
 window.addEventListener('orientationchange', updateFjGallery);
