@@ -1,6 +1,6 @@
 /*!
  * Name    : Flickr's Justified Gallery [fjGallery]
- * Version : 1.0.6
+ * Version : 1.0.7
  * Author  : nK <https://nkdev.info>
  * GitHub  : https://github.com/nk-o/flickr-justified-gallery
  */
@@ -550,7 +550,12 @@ var fjGallery = /*#__PURE__*/function () {
 
           i++;
         }
-      }); // Set container height.
+      }); // increase additional offset based on the latest row items height.
+
+      if (self.options.calculateItemsHeight && Object.keys(rowsMaxHeight).length) {
+        additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[justifiedData.boxes.length - 1].height;
+      } // Set container height.
+
 
       self.css(self.$container, {
         height: "".concat(justifiedData.containerHeight + additionalTopOffset, "px")
