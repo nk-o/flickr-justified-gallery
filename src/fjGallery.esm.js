@@ -1,4 +1,4 @@
-import { throttle } from 'throttle-debounce';
+import { debounce } from 'throttle-debounce';
 import rafSchd from 'raf-schd';
 import merge from 'merge';
 import domReady from 'lite-ready';
@@ -101,7 +101,7 @@ class fjGallery {
             gutter: 10, // supports object like `{ horizontal: 10, vertical: 10 }`.
             rowHeight: 320,
             rowHeightTolerance: 0.25, // [0, 1]
-            resizeThrottle: 200,
+            resizeDebounce: 100,
             isRtl: self.css(self.$container, 'direction') === 'rtl',
 
             // events
@@ -123,10 +123,17 @@ class fjGallery {
         });
 
         self.options = merge({}, self.defaults, pureDataOptions, userOptions);
+
+        // deprecated resizeThrottle option.
+        if ('undefined' !== typeof self.options.resizeThrottle) {
+            console.warning('`resizeThrottle` option is deprecated, use `resizeDebounce` instead');
+            self.options.resizeDebounce = self.options.resizeThrottle;
+        }
+
         self.pureOptions = merge({}, self.options);
 
-        // throttle for resize
-        self.resize = throttle(self.options.resizeThrottle, self.resize);
+        // debounce for resize
+        self.resize = debounce(self.options.resizeDebounce, self.resize);
         self.justify = rafSchd(self.justify.bind(self));
 
         self.init();

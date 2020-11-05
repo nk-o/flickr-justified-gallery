@@ -68,8 +68,7 @@ imageSelector | string | `img` | Image selector, will find in `itemSelector`.
 gutter | int/object | `10` | Gutter between items, supports object like `{ horizontal: 10, vertical: 10 }`.
 rowHeight | int | `320` | Rows height.
 rowHeightTolerance | float | `0.25` | How far row heights can stray from `rowHeight`. `0` would force rows to be the `rowHeight` exactly and would likely make it impossible to justify. The value must be between `0` and `1`.
-resizeThrottle | int | `200` | Window resize throttle timeout in `ms`.
-
+resizeDebounce | int | `100` | Window resize debounce timeout in `ms`.
 
 ## Events
 Events used the same way as Options.
