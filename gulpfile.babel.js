@@ -83,16 +83,6 @@ gulp.task('browser_sync', () => {
 });
 
 /**
- * Watch Task
- */
-gulp.task('dev', () => {
-    gulp.series('browser_sync', 'build')(() => {
-        gulp.watch('src/*.js', ['js']);
-        gulp.watch('src/*.css', ['css']);
-    });
-});
-
-/**
  * Build (default) Task
  */
 gulp.task('build', (cb) => {
@@ -102,3 +92,11 @@ gulp.task('build', (cb) => {
 gulp.task('default', (cb) => {
     gulp.series('build')(cb);
 });
+
+/**
+ * Watch Task
+ */
+gulp.task('dev', gulp.parallel('browser_sync', gulp.series('build', () => {
+    gulp.watch('src/*.js', gulp.series('js'));
+    gulp.watch('src/*.css', gulp.series('css'));
+})));
