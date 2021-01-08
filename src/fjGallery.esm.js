@@ -1,6 +1,5 @@
 import { debounce } from 'throttle-debounce';
 import rafSchd from 'raf-schd';
-import merge from 'merge';
 import domReady from 'lite-ready';
 import justifiedLayout from 'justified-layout';
 import { window } from 'global';
@@ -118,7 +117,11 @@ class fjGallery {
             }
         });
 
-        self.options = merge({}, self.defaults, pureDataOptions, userOptions);
+        self.options = {
+            ...self.defaults,
+            ...pureDataOptions,
+            ...userOptions,
+        };
 
         // deprecated resizeThrottle option.
         if (typeof self.options.resizeThrottle !== 'undefined') {
@@ -127,7 +130,9 @@ class fjGallery {
             self.options.resizeDebounce = self.options.resizeThrottle;
         }
 
-        self.pureOptions = merge({}, self.options);
+        self.pureOptions = {
+            ...self.options,
+        };
 
         // debounce for resize
         self.resize = debounce(self.options.resizeDebounce, self.resize);
@@ -314,7 +319,10 @@ class fjGallery {
     // update options and resize gallery items
     updateOptions(options) {
         const self = this;
-        self.options = merge({}, self.options, options);
+        self.options = {
+            ...self.options,
+            ...options,
+        };
         self.justify();
     }
 
