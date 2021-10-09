@@ -15,7 +15,6 @@
 <body>
     <div class="fj-gallery">
         <div class="fj-gallery-item">
-            <!-- <img src="https://source.unsplash.com/MBkQKiH14ng/400x600" alt="" width="400" height="600"> -->
             <img src="https://source.unsplash.com/MBkQKiH14ng/400x600" alt="" width="400" height="600">
         </div>
         <div class="fj-gallery-item">
@@ -33,6 +32,21 @@
         <div class="fj-gallery-item">
             <img src="https://source.unsplash.com/VNseEaTt9w4/800x600" alt="" width="800" height="600">
         </div>
+        <div class="fj-gallery-item">
+            <img src="https://source.unsplash.com/3pR7d-tIRx8/400x600" alt="" width="400" height="600">
+        </div>
+        <div class="fj-gallery-item">
+            <img src="https://source.unsplash.com/QD0IqRI5HxY/800x600" alt="" width="800" height="600">
+        </div>
+        <div class="fj-gallery-item">
+            <img src="https://source.unsplash.com/049M_crau5k/400x600" alt="" width="400" height="600">
+        </div>
+        <div class="fj-gallery-item">
+            <img src="https://source.unsplash.com/rXVFCA3fQ4I/800x600" alt="" width="800" height="600">
+        </div>
+        <div class="fj-gallery-item">
+            <img src="https://source.unsplash.com/6NfPkFTHsCA/800x600" alt="" width="800" height="600">
+        </div>
     </div>
     <div class="demo-gap demo-content">
         <div class="container">
@@ -49,12 +63,19 @@
 
     <div class="demo-gap">
         <p>
-            fjGallery &copy; 2018 nK
+            fjGallery &copy; 2021 nK
         </p>
         <small>
             All images taken from <a href="https://unsplash.com/">https://unsplash.com/</a>
         </small>
     </div>
+
+    <script>
+        fjGallery(document.querySelectorAll('.fj-gallery'), {
+            maxRowsCount: 2,
+            itemSelector: '.fj-gallery-item'
+        });
+    </script>
 
     <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 </body>
