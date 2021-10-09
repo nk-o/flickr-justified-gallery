@@ -123,13 +123,6 @@ class fjGallery {
             ...userOptions,
         };
 
-        // deprecated resizeThrottle option.
-        if (typeof self.options.resizeThrottle !== 'undefined') {
-            // eslint-disable-next-line no-console
-            console.warning('`resizeThrottle` option is deprecated, use `resizeDebounce` instead');
-            self.options.resizeDebounce = self.options.resizeThrottle;
-        }
-
         self.pureOptions = {
             ...self.options,
         };
