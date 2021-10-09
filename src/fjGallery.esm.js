@@ -95,6 +95,7 @@ class fjGallery {
             gutter: 10, // supports object like `{ horizontal: 10, vertical: 10 }`.
             rowHeight: 320,
             rowHeightTolerance: 0.25, // [0, 1]
+            maxRowsCount: Number.POSITIVE_INFINITY,
             calculateItemsHeight: false,
             resizeDebounce: 100,
             isRtl: self.css(self.$container, 'direction') === 'rtl',
@@ -255,6 +256,7 @@ class fjGallery {
             boxSpacing: self.options.gutter,
             targetRowHeight: self.options.rowHeight,
             targetRowHeightTolerance: self.options.rowHeightTolerance,
+            maxNumRows: self.options.maxRowsCount,
         });
 
         let i = 0;
@@ -263,13 +265,14 @@ class fjGallery {
 
         // Set image sizes.
         self.images.forEach((data, imgI) => {
-            if (data.width && data.height) {
+            if (justifiedData.boxes[i] && data.width && data.height) {
                 // calculate additional offset based on actual items height.
                 if (self.options.calculateItemsHeight && typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' && Object.keys(rowsMaxHeight).length) {
                     additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[imgI - 1].height;
                 }
 
                 self.css(data.$item, {
+                    display: '',
                     position: 'absolute',
                     transform: `translateX(${(self.options.isRtl ? -1 : 1) * justifiedData.boxes[i].left}px) translateY(${justifiedData.boxes[i].top + additionalTopOffset}px) translateZ(0)`,
                     width: `${justifiedData.boxes[i].width}px`,
@@ -285,6 +288,10 @@ class fjGallery {
                 }
 
                 i++;
+            } else {
+                self.css(data.$item, {
+                    display: 'none',
+                });
             }
         });
 
