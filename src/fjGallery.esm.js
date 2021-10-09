@@ -96,6 +96,7 @@ class fjGallery {
             rowHeight: 320,
             rowHeightTolerance: 0.25, // [0, 1]
             maxRowsCount: Number.POSITIVE_INFINITY,
+            transitionDuration: '0.3s',
             calculateItemsHeight: false,
             resizeDebounce: 100,
             isRtl: self.css(self.$container, 'direction') === 'rtl',
@@ -145,6 +146,36 @@ class fjGallery {
             el.style[key] = styles[key];
         });
         return el;
+    }
+
+    // set temporary transition with event listener
+    applyTransition($item, properties) {
+        const self = this;
+
+        // Remove previous event listener
+        self.onTransitionEnd($item)();
+
+        // Add transitions
+        self.css($item, {
+            'transition-property': properties.join(', '),
+            'transition-duration': self.options.transitionDuration,
+        });
+
+        // Add event listener
+        $item.addEventListener('transitionend', self.onTransitionEnd($item, properties), false);
+    }
+
+    onTransitionEnd($item) {
+        const self = this;
+
+        return () => {
+            self.css($item, {
+                'transition-property': '',
+                'transition-duration': '',
+            });
+
+            $item.removeEventListener('transitionend', self.onTransitionEnd($item));
+        };
     }
 
     // add to fjGallery instances list
@@ -234,6 +265,8 @@ class fjGallery {
         const self = this;
         const justifyArray = [];
 
+        self.justifyCount = (self.justifyCount || 0) + 1;
+
         // call onBeforeJustify event
         if (self.options.onBeforeJustify) {
             self.options.onBeforeJustify.call(self);
@@ -271,6 +304,10 @@ class fjGallery {
                     additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[imgI - 1].height;
                 }
 
+                if (self.options.transitionDuration && self.justifyCount > 1) {
+                    self.applyTransition(data.$item, ['transform']);
+                }
+
                 self.css(data.$item, {
                     display: '',
                     position: 'absolute',
@@ -300,6 +337,10 @@ class fjGallery {
             additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[justifiedData.boxes.length - 1].height;
         }
 
+        if (self.options.transitionDuration) {
+            self.applyTransition(self.$container, ['height']);
+        }
+
         // Set container height.
         self.css(self.$container, {
             height: `${justifiedData.containerHeight + additionalTopOffset}px`,
@@ -326,6 +367,8 @@ class fjGallery {
 
         self.removeFromFjGalleryList();
 
+        self.justifyCount = 0;
+
         // call onDestroy event
         if (self.options.onDestroy) {
             self.options.onDestroy.call(self);
@@ -334,11 +377,13 @@ class fjGallery {
         // remove styles.
         self.css(self.$container, {
             height: '',
+            transition: '',
         });
         self.images.forEach((data) => {
             self.css(data.$item, {
                 position: '',
                 transform: '',
+                transition: '',
                 width: '',
                 height: '',
             });
