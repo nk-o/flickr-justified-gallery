@@ -140,11 +140,6 @@ class fjGallery {
             return window.getComputedStyle(el).getPropertyValue(styles);
         }
 
-        // add transform property with vendor prefix
-        if (styles.transform) {
-            styles['-webkit-transform'] = styles.transform;
-        }
-
         Object.keys(styles).forEach((key) => {
             el.style[key] = styles[key];
         });
