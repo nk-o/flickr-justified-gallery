@@ -1,4 +1,3 @@
-import domReady from 'lite-ready';
 import { window, jQuery } from 'global';
 import fjGallery from './fjGallery.esm';
 
@@ -49,8 +48,3 @@ if (typeof jQuery !== 'undefined') {
         return this;
     };
 }
-
-// .fj-gallery initialization
-domReady(() => {
-    fjGallery(document.querySelectorAll('.fj-gallery'));
-});
