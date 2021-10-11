@@ -312,6 +312,13 @@ class fjGallery {
             }
         }
 
+        // RTL compatibility
+        if (self.options.isRtl) {
+            justifiedData.boxes.forEach((boxData, i) => {
+                justifiedData.boxes[i].left = justifiedOptions.containerWidth - justifiedData.boxes[i].left - justifiedData.boxes[i].width - justifiedOptions.containerPadding.right + justifiedOptions.containerPadding.left;
+            });
+        }
+
         let i = 0;
         let additionalTopOffset = 0;
         const rowsMaxHeight = {};
@@ -331,7 +338,7 @@ class fjGallery {
                 self.css(data.$item, {
                     display: '',
                     position: 'absolute',
-                    transform: `translateX(${(self.options.isRtl ? -1 : 1) * justifiedData.boxes[i].left}px) translateY(${justifiedData.boxes[i].top + additionalTopOffset}px) translateZ(0)`,
+                    transform: `translateX(${justifiedData.boxes[i].left}px) translateY(${justifiedData.boxes[i].top + additionalTopOffset}px) translateZ(0)`,
                     width: `${justifiedData.boxes[i].width}px`,
                 });
 
