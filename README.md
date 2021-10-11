@@ -4,6 +4,22 @@ Flickr justified images gallery based on [https://github.com/flickr/justified-la
 
 ## [Demo](https://free.nkdev.info/flickr-justified-gallery/)
 
+## Sizes
+
+ File                   | Gzipped Size
+:-----------------------|:------------------------------------------------------------------------------------------------|
+fjGallery.min.js         | ![fjGallery.min.js](https://img.badgesize.io/nk-o/flickr-justified-gallery/master/dist/fjGallery.min.js?compression=gzip)
+
+## Usage with WordPress
+
+[![Visual Portfolio](https://a.nkdev.info/visual-portfolio/preview.jpg?v=2)](https://visualportfolio.co/)
+
+We made WordPress plugin to easily create image galleries and portfolios in your blog with masonry, tiles and Flickr's Justified Gallery layouts.
+
+Demo: <https://visualportfolio.co/>
+
+Download: <https://nkdev.info/downloads/visual-portfolio/>
+
 ## Getting Started
 
 ### ES6
@@ -61,16 +77,6 @@ $('.fj-gallery').fjGallery({
     itemSelector: '.fj-gallery-item'
 });
 ```
-
-## WordPress Plugin
-
-[![Visual Portfolio](https://a.nkdev.info/visual-portfolio/preview.jpg?v=2)](https://visualportfolio.co/)
-
-We made WordPress plugin to easily create portfolios and image galleries in your blog with masonry, tiles and Flickr's justified gallery layouts.
-
-Demo: <https://visualportfolio.co/>
-
-Download: <https://nkdev.info/downloads/visual-portfolio/>
 
 ## Options
 
