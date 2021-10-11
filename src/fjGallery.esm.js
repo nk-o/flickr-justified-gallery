@@ -96,6 +96,7 @@ class fjGallery {
             rowHeight: 320,
             rowHeightTolerance: 0.25, // [0, 1]
             maxRowsCount: Number.POSITIVE_INFINITY,
+            lastRow: 'left', // left, center, right, hide
             transitionDuration: '0.3s',
             calculateItemsHeight: false,
             resizeDebounce: 100,
@@ -278,7 +279,7 @@ class fjGallery {
             }
         });
 
-        const justifiedData = justifiedLayout(justifyArray, {
+        const justifiedOptions = {
             containerWidth: self.$container.getBoundingClientRect().width,
             containerPadding: {
                 top: parseFloat(self.css(self.$container, 'padding-top')) || 0,
@@ -290,7 +291,26 @@ class fjGallery {
             targetRowHeight: self.options.rowHeight,
             targetRowHeightTolerance: self.options.rowHeightTolerance,
             maxNumRows: self.options.maxRowsCount,
-        });
+            showWidows: self.options.lastRow !== 'hide',
+        };
+        const justifiedData = justifiedLayout(justifyArray, justifiedOptions);
+
+        // Align last row
+        if (justifiedData.widowCount && (self.options.lastRow === 'center' || self.options.lastRow === 'right')) {
+            const lastItemData = justifiedData.boxes[justifiedData.boxes.length - 1];
+            let gapSize = justifiedOptions.containerWidth - lastItemData.width - lastItemData.left;
+
+            if (self.options.lastRow === 'center') {
+                gapSize /= 2;
+            }
+            if (self.options.lastRow === 'right') {
+                gapSize -= justifiedOptions.containerPadding.right;
+            }
+
+            for (let i = 1; i <= justifiedData.widowCount; i++) {
+                justifiedData.boxes[justifiedData.boxes.length - i].left = justifiedData.boxes[justifiedData.boxes.length - i].left + gapSize;
+            }
+        }
 
         let i = 0;
         let additionalTopOffset = 0;
