@@ -1,206 +1,21 @@
 /*!
  * Name    : Flickr's Justified Gallery [fjGallery]
- * Version : 1.0.7
+ * Version : 2.0.0
  * Author  : nK <https://nkdev.info>
  * GitHub  : https://github.com/nk-o/flickr-justified-gallery
  */
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(1);
-
-
-/***/ }),
+/******/ (function() { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ([
+/* 0 */,
 /* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
-/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lite_ready__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
-/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(global__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _fjGallery_esm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-
-
- // no conflict
-
-var oldPlugin = global__WEBPACK_IMPORTED_MODULE_1__["window"].fjGallery;
-global__WEBPACK_IMPORTED_MODULE_1__["window"].fjGallery = _fjGallery_esm__WEBPACK_IMPORTED_MODULE_2__["default"];
-
-global__WEBPACK_IMPORTED_MODULE_1__["window"].fjGallery.noConflict = function () {
-  global__WEBPACK_IMPORTED_MODULE_1__["window"].fjGallery = oldPlugin;
-  return this;
-}; // jQuery support
-
-
-if (typeof global__WEBPACK_IMPORTED_MODULE_1__["jQuery"] !== 'undefined') {
-  // add data to jQuery .data('fjGallery')
-  var oldInit = global__WEBPACK_IMPORTED_MODULE_1__["window"].fjGallery.constructor.prototype.init;
-
-  global__WEBPACK_IMPORTED_MODULE_1__["window"].fjGallery.constructor.prototype.init = function () {
-    this.jQcontainer = Object(global__WEBPACK_IMPORTED_MODULE_1__["jQuery"])(this.$container);
-    this.jQcontainer.data('fjGallery', this);
-
-    if (oldInit) {
-      oldInit.call(this);
-    }
-  }; // remove data from jQuery .data('fjGallery')
-
-
-  var oldDestroy = global__WEBPACK_IMPORTED_MODULE_1__["window"].fjGallery.constructor.prototype.destroy;
-
-  global__WEBPACK_IMPORTED_MODULE_1__["window"].fjGallery.constructor.prototype.destroy = function () {
-    if (this.jQcontainer) {
-      this.jQcontainer.removeData('fjGallery');
-    }
-
-    if (oldDestroy) {
-      oldDestroy.call(this);
-    }
-  };
-
-  var jQueryPlugin = function jQueryPlugin() {
-    var args = arguments || [];
-    Array.prototype.unshift.call(args, this);
-    var res = _fjGallery_esm__WEBPACK_IMPORTED_MODULE_2__["default"].apply(global__WEBPACK_IMPORTED_MODULE_1__["window"], args);
-    return _typeof(res) !== 'object' ? res : this;
-  };
-
-  jQueryPlugin.constructor = _fjGallery_esm__WEBPACK_IMPORTED_MODULE_2__["default"].constructor; // no conflict
-
-  var oldJqPlugin = global__WEBPACK_IMPORTED_MODULE_1__["jQuery"].fn.fjGallery;
-  global__WEBPACK_IMPORTED_MODULE_1__["jQuery"].fn.fjGallery = jQueryPlugin;
-
-  global__WEBPACK_IMPORTED_MODULE_1__["jQuery"].fn.fjGallery.noConflict = function () {
-    global__WEBPACK_IMPORTED_MODULE_1__["jQuery"].fn.fjGallery = oldJqPlugin;
-    return this;
-  };
-} // .fj-gallery initialization
-
-
-lite_ready__WEBPACK_IMPORTED_MODULE_0___default()(function () {
-  Object(_fjGallery_esm__WEBPACK_IMPORTED_MODULE_2__["default"])(document.querySelectorAll('.fj-gallery'));
-});
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = function (callback) {
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    // Already ready or interactive, execute callback
-    callback.call();
-  } else if (document.attachEvent) {
-    // Old browsers
-    document.attachEvent('onreadystatechange', function () {
-      if (document.readyState === 'interactive') callback.call();
-    });
-  } else if (document.addEventListener) {
-    // Modern browsers
-    document.addEventListener('DOMContentLoaded', callback);
-  }
-};
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var win;
+var win;
 
 if (typeof window !== "undefined") {
   win = window;
-} else if (typeof global !== "undefined") {
-  win = global;
+} else if (typeof __webpack_require__.g !== "undefined") {
+  win = __webpack_require__.g;
 } else if (typeof self !== "undefined") {
   win = self;
 } else {
@@ -208,51 +23,28 @@ if (typeof window !== "undefined") {
 }
 
 module.exports = win;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(4)))
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-var g; // This works in non-strict mode
-
-g = function () {
-  return this;
-}();
-
-try {
-  // This works if eval is allowed (see CSP)
-  g = g || new Function("return this")();
-} catch (e) {
-  // This works if the window reference is available
-  if ((typeof window === "undefined" ? "undefined" : _typeof(window)) === "object") g = window;
-} // g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-
-module.exports = g;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 2 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
-/* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(throttle_debounce__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var raf_schd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
-/* harmony import */ var merge__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
-/* harmony import */ var merge__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(merge__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2);
-/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lite_ready__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var justified_layout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10);
-/* harmony import */ var justified_layout__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(justified_layout__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3);
-/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(global__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var throttle_debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var raf_schd__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7);
+/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* harmony import */ var lite_ready__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lite_ready__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var justified_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
+/* harmony import */ var justified_layout__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(justified_layout__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1);
+/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(global__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -264,20 +56,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-
  // list with all fjGallery instances
 // need to render all in one scroll/resize event
 
 var fjGalleryList = [];
-var updateFjGallery = Object(raf_schd__WEBPACK_IMPORTED_MODULE_1__["default"])(function () {
+var updateFjGallery = (0,raf_schd__WEBPACK_IMPORTED_MODULE_4__["default"])(function () {
   fjGalleryList.forEach(function (item) {
     item.resize();
   });
 });
-global__WEBPACK_IMPORTED_MODULE_5__["window"].addEventListener('resize', updateFjGallery);
-global__WEBPACK_IMPORTED_MODULE_5__["window"].addEventListener('orientationchange', updateFjGallery);
-global__WEBPACK_IMPORTED_MODULE_5__["window"].addEventListener('load', updateFjGallery);
-lite_ready__WEBPACK_IMPORTED_MODULE_3___default()(function () {
+global__WEBPACK_IMPORTED_MODULE_3__.window.addEventListener('resize', updateFjGallery);
+global__WEBPACK_IMPORTED_MODULE_3__.window.addEventListener('orientationchange', updateFjGallery);
+global__WEBPACK_IMPORTED_MODULE_3__.window.addEventListener('load', updateFjGallery);
+lite_ready__WEBPACK_IMPORTED_MODULE_1___default()(function () {
   updateFjGallery();
 }); // get image dimensions
 // thanks https://gist.github.com/dimsemenov/5382856
@@ -358,6 +149,10 @@ var fjGallery = /*#__PURE__*/function () {
       rowHeight: 320,
       rowHeightTolerance: 0.25,
       // [0, 1]
+      maxRowsCount: Number.POSITIVE_INFINITY,
+      lastRow: 'left',
+      // left, center, right, hide
+      transitionDuration: '0.3s',
       calculateItemsHeight: false,
       resizeDebounce: 100,
       isRtl: self.css(self.$container, 'direction') === 'rtl',
@@ -383,18 +178,11 @@ var fjGallery = /*#__PURE__*/function () {
         pureDataOptions[loweCaseOption] = dataOptions[key];
       }
     });
-    self.options = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.defaults, pureDataOptions, userOptions); // deprecated resizeThrottle option.
+    self.options = _objectSpread(_objectSpread(_objectSpread({}, self.defaults), pureDataOptions), userOptions);
+    self.pureOptions = _objectSpread({}, self.options); // debounce for resize
 
-    if (typeof self.options.resizeThrottle !== 'undefined') {
-      // eslint-disable-next-line no-console
-      console.warning('`resizeThrottle` option is deprecated, use `resizeDebounce` instead');
-      self.options.resizeDebounce = self.options.resizeThrottle;
-    }
-
-    self.pureOptions = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.options); // debounce for resize
-
-    self.resize = Object(throttle_debounce__WEBPACK_IMPORTED_MODULE_0__["debounce"])(self.options.resizeDebounce, self.resize);
-    self.justify = Object(raf_schd__WEBPACK_IMPORTED_MODULE_1__["default"])(self.justify.bind(self));
+    self.resize = (0,throttle_debounce__WEBPACK_IMPORTED_MODULE_0__.debounce)(self.options.resizeDebounce, self.resize);
+    self.justify = (0,raf_schd__WEBPACK_IMPORTED_MODULE_4__["default"])(self.justify.bind(self));
     self.init();
   } // add styles to element
 
@@ -403,18 +191,40 @@ var fjGallery = /*#__PURE__*/function () {
     key: "css",
     value: function css(el, styles) {
       if (typeof styles === 'string') {
-        return global__WEBPACK_IMPORTED_MODULE_5__["window"].getComputedStyle(el).getPropertyValue(styles);
-      } // add transform property with vendor prefix
-
-
-      if (styles.transform) {
-        styles['-webkit-transform'] = styles.transform;
+        return global__WEBPACK_IMPORTED_MODULE_3__.window.getComputedStyle(el).getPropertyValue(styles);
       }
 
       Object.keys(styles).forEach(function (key) {
         el.style[key] = styles[key];
       });
       return el;
+    } // set temporary transition with event listener
+
+  }, {
+    key: "applyTransition",
+    value: function applyTransition($item, properties) {
+      var self = this; // Remove previous event listener
+
+      self.onTransitionEnd($item)(); // Add transitions
+
+      self.css($item, {
+        'transition-property': properties.join(', '),
+        'transition-duration': self.options.transitionDuration
+      }); // Add event listener
+
+      $item.addEventListener('transitionend', self.onTransitionEnd($item, properties), false);
+    }
+  }, {
+    key: "onTransitionEnd",
+    value: function onTransitionEnd($item) {
+      var self = this;
+      return function () {
+        self.css($item, {
+          'transition-property': '',
+          'transition-duration': ''
+        });
+        $item.removeEventListener('transitionend', self.onTransitionEnd($item));
+      };
     } // add to fjGallery instances list
 
   }, {
@@ -451,7 +261,7 @@ var fjGallery = /*#__PURE__*/function () {
     value: function appendImages($images) {
       var self = this; // check if jQuery
 
-      if (global__WEBPACK_IMPORTED_MODULE_5__["window"].jQuery && $images instanceof global__WEBPACK_IMPORTED_MODULE_5__["window"].jQuery) {
+      if (global__WEBPACK_IMPORTED_MODULE_3__.window.jQuery && $images instanceof global__WEBPACK_IMPORTED_MODULE_3__.window.jQuery) {
         $images = $images.get();
       }
 
@@ -500,7 +310,8 @@ var fjGallery = /*#__PURE__*/function () {
     key: "justify",
     value: function justify() {
       var self = this;
-      var justifyArray = []; // call onBeforeJustify event
+      var justifyArray = [];
+      self.justifyCount = (self.justifyCount || 0) + 1; // call onBeforeJustify event
 
       if (self.options.onBeforeJustify) {
         self.options.onBeforeJustify.call(self);
@@ -511,7 +322,7 @@ var fjGallery = /*#__PURE__*/function () {
           justifyArray.push(data.width / data.height);
         }
       });
-      var justifiedData = justified_layout__WEBPACK_IMPORTED_MODULE_4___default()(justifyArray, {
+      var justifiedOptions = {
         containerWidth: self.$container.getBoundingClientRect().width,
         containerPadding: {
           top: parseFloat(self.css(self.$container, 'padding-top')) || 0,
@@ -521,22 +332,55 @@ var fjGallery = /*#__PURE__*/function () {
         },
         boxSpacing: self.options.gutter,
         targetRowHeight: self.options.rowHeight,
-        targetRowHeightTolerance: self.options.rowHeightTolerance
-      });
+        targetRowHeightTolerance: self.options.rowHeightTolerance,
+        maxNumRows: self.options.maxRowsCount,
+        showWidows: self.options.lastRow !== 'hide'
+      };
+      var justifiedData = justified_layout__WEBPACK_IMPORTED_MODULE_2___default()(justifyArray, justifiedOptions); // Align last row
+
+      if (justifiedData.widowCount && (self.options.lastRow === 'center' || self.options.lastRow === 'right')) {
+        var lastItemData = justifiedData.boxes[justifiedData.boxes.length - 1];
+        var gapSize = justifiedOptions.containerWidth - lastItemData.width - lastItemData.left;
+
+        if (self.options.lastRow === 'center') {
+          gapSize /= 2;
+        }
+
+        if (self.options.lastRow === 'right') {
+          gapSize -= justifiedOptions.containerPadding.right;
+        }
+
+        for (var _i = 1; _i <= justifiedData.widowCount; _i++) {
+          justifiedData.boxes[justifiedData.boxes.length - _i].left = justifiedData.boxes[justifiedData.boxes.length - _i].left + gapSize;
+        }
+      } // RTL compatibility
+
+
+      if (self.options.isRtl) {
+        justifiedData.boxes.forEach(function (boxData, i) {
+          justifiedData.boxes[i].left = justifiedOptions.containerWidth - justifiedData.boxes[i].left - justifiedData.boxes[i].width - justifiedOptions.containerPadding.right + justifiedOptions.containerPadding.left;
+        });
+      }
+
       var i = 0;
       var additionalTopOffset = 0;
       var rowsMaxHeight = {}; // Set image sizes.
 
       self.images.forEach(function (data, imgI) {
-        if (data.width && data.height) {
+        if (justifiedData.boxes[i] && data.width && data.height) {
           // calculate additional offset based on actual items height.
           if (self.options.calculateItemsHeight && typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' && Object.keys(rowsMaxHeight).length) {
             additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[imgI - 1].height;
           }
 
+          if (self.options.transitionDuration && self.justifyCount > 1) {
+            self.applyTransition(data.$item, ['transform']);
+          }
+
           self.css(data.$item, {
+            display: '',
             position: 'absolute',
-            transform: "translateX(".concat((self.options.isRtl ? -1 : 1) * justifiedData.boxes[i].left, "px) translateY(").concat(justifiedData.boxes[i].top + additionalTopOffset, "px) translateZ(0)"),
+            transform: "translateX(".concat(justifiedData.boxes[i].left, "px) translateY(").concat(justifiedData.boxes[i].top + additionalTopOffset, "px) translateZ(0)"),
             width: "".concat(justifiedData.boxes[i].width, "px")
           }); // calculate actual items height.
 
@@ -549,11 +393,19 @@ var fjGallery = /*#__PURE__*/function () {
           }
 
           i++;
+        } else {
+          self.css(data.$item, {
+            display: 'none'
+          });
         }
       }); // increase additional offset based on the latest row items height.
 
       if (self.options.calculateItemsHeight && Object.keys(rowsMaxHeight).length) {
         additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[justifiedData.boxes.length - 1].height;
+      }
+
+      if (self.options.transitionDuration) {
+        self.applyTransition(self.$container, ['height']);
       } // Set container height.
 
 
@@ -570,14 +422,15 @@ var fjGallery = /*#__PURE__*/function () {
     key: "updateOptions",
     value: function updateOptions(options) {
       var self = this;
-      self.options = merge__WEBPACK_IMPORTED_MODULE_2___default()({}, self.options, options);
+      self.options = _objectSpread(_objectSpread({}, self.options), options);
       self.justify();
     }
   }, {
     key: "destroy",
     value: function destroy() {
       var self = this;
-      self.removeFromFjGalleryList(); // call onDestroy event
+      self.removeFromFjGalleryList();
+      self.justifyCount = 0; // call onDestroy event
 
       if (self.options.onDestroy) {
         self.options.onDestroy.call(self);
@@ -585,12 +438,14 @@ var fjGallery = /*#__PURE__*/function () {
 
 
       self.css(self.$container, {
-        height: ''
+        height: '',
+        transition: ''
       });
       self.images.forEach(function (data) {
         self.css(data.$item, {
           position: '',
           transform: '',
+          transition: '',
           width: '',
           height: ''
         });
@@ -650,381 +505,178 @@ plugin.constructor = fjGallery;
 /* harmony default export */ __webpack_exports__["default"] = (plugin);
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-(function (global, factory) {
-  ( false ? undefined : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? factory(exports) :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : (undefined);
-})(this, function (exports) {
-  'use strict';
-  /* eslint-disable no-undefined,no-param-reassign,no-shadow */
-
-  /**
-   * Throttle execution of a function. Especially useful for rate limiting
-   * execution of handlers on events like resize and scroll.
-   *
-   * @param  {number}    delay -          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
-   * @param  {boolean}   [noTrailing] -   Optional, defaults to false. If noTrailing is true, callback will only execute every `delay` milliseconds while the
-   *                                    throttled-function is being called. If noTrailing is false or unspecified, callback will be executed one final time
-   *                                    after the last throttled-function call. (After the throttled-function has not been called for `delay` milliseconds,
-   *                                    the internal counter is reset).
-   * @param  {Function}  callback -       A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
-   *                                    to `callback` when the throttled-function is executed.
-   * @param  {boolean}   [debounceMode] - If `debounceMode` is true (at begin), schedule `clear` to execute after `delay` ms. If `debounceMode` is false (at end),
-   *                                    schedule `callback` to execute after `delay` ms.
-   *
-   * @returns {Function}  A new, throttled, function.
-   */
-
-  function throttle(delay, noTrailing, callback, debounceMode) {
-    /*
-     * After wrapper has stopped being called, this timeout ensures that
-     * `callback` is executed at the proper times in `throttle` and `end`
-     * debounce modes.
-     */
-    var timeoutID;
-    var cancelled = false; // Keep track of the last time `callback` was executed.
-
-    var lastExec = 0; // Function to clear existing timeout
-
-    function clearExistingTimeout() {
-      if (timeoutID) {
-        clearTimeout(timeoutID);
-      }
-    } // Function to cancel next exec
-
-
-    function cancel() {
-      clearExistingTimeout();
-      cancelled = true;
-    } // `noTrailing` defaults to falsy.
-
-
-    if (typeof noTrailing !== 'boolean') {
-      debounceMode = callback;
-      callback = noTrailing;
-      noTrailing = undefined;
-    }
-    /*
-     * The `wrapper` function encapsulates all of the throttling / debouncing
-     * functionality and when executed will limit the rate at which `callback`
-     * is executed.
-     */
-
-
-    function wrapper() {
-      for (var _len = arguments.length, arguments_ = new Array(_len), _key = 0; _key < _len; _key++) {
-        arguments_[_key] = arguments[_key];
-      }
-
-      var self = this;
-      var elapsed = Date.now() - lastExec;
-
-      if (cancelled) {
-        return;
-      } // Execute `callback` and update the `lastExec` timestamp.
-
-
-      function exec() {
-        lastExec = Date.now();
-        callback.apply(self, arguments_);
-      }
-      /*
-       * If `debounceMode` is true (at begin) this is used to clear the flag
-       * to allow future `callback` executions.
-       */
-
-
-      function clear() {
-        timeoutID = undefined;
-      }
-
-      if (debounceMode && !timeoutID) {
-        /*
-         * Since `wrapper` is being called for the first time and
-         * `debounceMode` is true (at begin), execute `callback`.
-         */
-        exec();
-      }
-
-      clearExistingTimeout();
-
-      if (debounceMode === undefined && elapsed > delay) {
-        /*
-         * In throttle mode, if `delay` time has been exceeded, execute
-         * `callback`.
-         */
-        exec();
-      } else if (noTrailing !== true) {
-        /*
-         * In trailing throttle mode, since `delay` time has not been
-         * exceeded, schedule `callback` to execute `delay` ms after most
-         * recent execution.
-         *
-         * If `debounceMode` is true (at begin), schedule `clear` to execute
-         * after `delay` ms.
-         *
-         * If `debounceMode` is false (at end), schedule `callback` to
-         * execute after `delay` ms.
-         */
-        timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
-      }
-    }
-
-    wrapper.cancel = cancel; // Return the wrapper function.
-
-    return wrapper;
-  }
-  /* eslint-disable no-undefined */
-
-  /**
-   * Debounce execution of a function. Debouncing, unlike throttling,
-   * guarantees that a function is only executed a single time, either at the
-   * very beginning of a series of calls, or at the very end.
-   *
-   * @param  {number}   delay -         A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
-   * @param  {boolean}  [atBegin] -     Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
-   *                                  after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
-   *                                  (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
-   * @param  {Function} callback -      A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
-   *                                  to `callback` when the debounced-function is executed.
-   *
-   * @returns {Function} A new, debounced function.
-   */
-
-
-  function debounce(delay, atBegin, callback) {
-    return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
-  }
-
-  exports.debounce = debounce;
-  exports.throttle = throttle;
-  Object.defineProperty(exports, '__esModule', {
-    value: true
-  });
-});
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 3 */
+/***/ (function(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var rafSchd = function rafSchd(fn) {
-  var lastArgs = [];
-  var frameId = null;
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "debounce": function() { return /* binding */ debounce; },
+/* harmony export */   "throttle": function() { return /* binding */ throttle; }
+/* harmony export */ });
+/* eslint-disable no-undefined,no-param-reassign,no-shadow */
 
-  var wrapperFn = function wrapperFn() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    lastArgs = args;
-
-    if (frameId) {
-      return;
-    }
-
-    frameId = requestAnimationFrame(function () {
-      frameId = null;
-      fn.apply(void 0, lastArgs);
-    });
-  };
-
-  wrapperFn.cancel = function () {
-    if (!frameId) {
-      return;
-    }
-
-    cancelAnimationFrame(frameId);
-    frameId = null;
-  };
-
-  return wrapperFn;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (rafSchd);
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-/*!
- * @name JavaScript/NodeJS Merge v1.2.1
- * @author yeikos
- * @repository https://github.com/yeikos/js.merge
-
- * Copyright 2014 yeikos - MIT license
- * https://raw.github.com/yeikos/js.merge/master/LICENSE
+/**
+ * Throttle execution of a function. Especially useful for rate limiting
+ * execution of handlers on events like resize and scroll.
+ *
+ * @param  {number}    delay -          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ * @param  {boolean}   [noTrailing] -   Optional, defaults to false. If noTrailing is true, callback will only execute every `delay` milliseconds while the
+ *                                    throttled-function is being called. If noTrailing is false or unspecified, callback will be executed one final time
+ *                                    after the last throttled-function call. (After the throttled-function has not been called for `delay` milliseconds,
+ *                                    the internal counter is reset).
+ * @param  {Function}  callback -       A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+ *                                    to `callback` when the throttled-function is executed.
+ * @param  {boolean}   [debounceMode] - If `debounceMode` is true (at begin), schedule `clear` to execute after `delay` ms. If `debounceMode` is false (at end),
+ *                                    schedule `callback` to execute after `delay` ms.
+ *
+ * @returns {Function}  A new, throttled, function.
  */
-;
-
-(function (isNode) {
-  /**
-   * Merge one or more objects 
-   * @param bool? clone
-   * @param mixed,... arguments
-   * @return object
+function throttle(delay, noTrailing, callback, debounceMode) {
+  /*
+   * After wrapper has stopped being called, this timeout ensures that
+   * `callback` is executed at the proper times in `throttle` and `end`
+   * debounce modes.
    */
-  var Public = function Public(clone) {
-    return merge(clone === true, false, arguments);
-  },
-      publicName = 'merge';
-  /**
-   * Merge two or more objects recursively 
-   * @param bool? clone
-   * @param mixed,... arguments
-   * @return object
+  var timeoutID;
+  var cancelled = false; // Keep track of the last time `callback` was executed.
+
+  var lastExec = 0; // Function to clear existing timeout
+
+  function clearExistingTimeout() {
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+  } // Function to cancel next exec
+
+
+  function cancel() {
+    clearExistingTimeout();
+    cancelled = true;
+  } // `noTrailing` defaults to falsy.
+
+
+  if (typeof noTrailing !== 'boolean') {
+    debounceMode = callback;
+    callback = noTrailing;
+    noTrailing = undefined;
+  }
+  /*
+   * The `wrapper` function encapsulates all of the throttling / debouncing
+   * functionality and when executed will limit the rate at which `callback`
+   * is executed.
    */
 
 
-  Public.recursive = function (clone) {
-    return merge(clone === true, true, arguments);
-  };
-  /**
-   * Clone the input removing any reference
-   * @param mixed input
-   * @return mixed
-   */
-
-
-  Public.clone = function (input) {
-    var output = input,
-        type = typeOf(input),
-        index,
-        size;
-
-    if (type === 'array') {
-      output = [];
-      size = input.length;
-
-      for (index = 0; index < size; ++index) {
-        output[index] = Public.clone(input[index]);
-      }
-    } else if (type === 'object') {
-      output = {};
-
-      for (index in input) {
-        output[index] = Public.clone(input[index]);
-      }
+  function wrapper() {
+    for (var _len = arguments.length, arguments_ = new Array(_len), _key = 0; _key < _len; _key++) {
+      arguments_[_key] = arguments[_key];
     }
 
-    return output;
-  };
-  /**
-   * Merge two objects recursively
-   * @param mixed input
-   * @param mixed extend
-   * @return mixed
-   */
+    var self = this;
+    var elapsed = Date.now() - lastExec;
+
+    if (cancelled) {
+      return;
+    } // Execute `callback` and update the `lastExec` timestamp.
 
 
-  function merge_recursive(base, extend) {
-    if (typeOf(base) !== 'object') return extend;
+    function exec() {
+      lastExec = Date.now();
+      callback.apply(self, arguments_);
+    }
+    /*
+     * If `debounceMode` is true (at begin) this is used to clear the flag
+     * to allow future `callback` executions.
+     */
 
-    for (var key in extend) {
-      if (typeOf(base[key]) === 'object' && typeOf(extend[key]) === 'object') {
-        base[key] = merge_recursive(base[key], extend[key]);
-      } else {
-        base[key] = extend[key];
-      }
+
+    function clear() {
+      timeoutID = undefined;
     }
 
-    return base;
-  }
-  /**
-   * Merge two or more objects
-   * @param bool clone
-   * @param bool recursive
-   * @param array argv
-   * @return object
-   */
-
-
-  function merge(clone, recursive, argv) {
-    var result = argv[0],
-        size = argv.length;
-    if (clone || typeOf(result) !== 'object') result = {};
-
-    for (var index = 0; index < size; ++index) {
-      var item = argv[index],
-          type = typeOf(item);
-      if (type !== 'object') continue;
-
-      for (var key in item) {
-        if (key === '__proto__') continue;
-        var sitem = clone ? Public.clone(item[key]) : item[key];
-
-        if (recursive) {
-          result[key] = merge_recursive(result[key], sitem);
-        } else {
-          result[key] = sitem;
-        }
-      }
+    if (debounceMode && !timeoutID) {
+      /*
+       * Since `wrapper` is being called for the first time and
+       * `debounceMode` is true (at begin), execute `callback`.
+       */
+      exec();
     }
 
-    return result;
+    clearExistingTimeout();
+
+    if (debounceMode === undefined && elapsed > delay) {
+      /*
+       * In throttle mode, if `delay` time has been exceeded, execute
+       * `callback`.
+       */
+      exec();
+    } else if (noTrailing !== true) {
+      /*
+       * In trailing throttle mode, since `delay` time has not been
+       * exceeded, schedule `callback` to execute `delay` ms after most
+       * recent execution.
+       *
+       * If `debounceMode` is true (at begin), schedule `clear` to execute
+       * after `delay` ms.
+       *
+       * If `debounceMode` is false (at end), schedule `callback` to
+       * execute after `delay` ms.
+       */
+      timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
+    }
   }
-  /**
-   * Get type of variable
-   * @param mixed input
-   * @return string
-   *
-   * @see http://jsperf.com/typeofvar
-   */
+
+  wrapper.cancel = cancel; // Return the wrapper function.
+
+  return wrapper;
+}
+/* eslint-disable no-undefined */
+
+/**
+ * Debounce execution of a function. Debouncing, unlike throttling,
+ * guarantees that a function is only executed a single time, either at the
+ * very beginning of a series of calls, or at the very end.
+ *
+ * @param  {number}   delay -         A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ * @param  {boolean}  [atBegin] -     Optional, defaults to false. If atBegin is false or unspecified, callback will only be executed `delay` milliseconds
+ *                                  after the last debounced-function call. If atBegin is true, callback will be executed only at the first debounced-function call.
+ *                                  (After the throttled-function has not been called for `delay` milliseconds, the internal counter is reset).
+ * @param  {Function} callback -      A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+ *                                  to `callback` when the debounced-function is executed.
+ *
+ * @returns {Function} A new, debounced function.
+ */
 
 
-  function typeOf(input) {
-    return {}.toString.call(input).slice(8, -1).toLowerCase();
-  }
+function debounce(delay, atBegin, callback) {
+  return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
+}
 
-  if (isNode) {
-    module.exports = Public;
-  } else {
-    window[publicName] = Public;
-  }
-})(( false ? undefined : _typeof(module)) === 'object' && module && _typeof(module.exports) === 'object' && module.exports);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9)(module)))
+
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports) {
+/* 4 */
+/***/ (function(module) {
 
-module.exports = function (module) {
-  if (!module.webpackPolyfill) {
-    module.deprecate = function () {};
-
-    module.paths = []; // module.parent = undefined by default
-
-    if (!module.children) module.children = [];
-    Object.defineProperty(module, "loaded", {
-      enumerable: true,
-      get: function get() {
-        return module.l;
-      }
+module.exports = function (callback) {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    // Already ready or interactive, execute callback
+    callback.call();
+  } else if (document.attachEvent) {
+    // Old browsers
+    document.attachEvent('onreadystatechange', function () {
+      if (document.readyState === 'interactive') callback.call();
     });
-    Object.defineProperty(module, "id", {
-      enumerable: true,
-      get: function get() {
-        return module.i;
-      }
-    });
-    module.webpackPolyfill = 1;
+  } else if (document.addEventListener) {
+    // Modern browsers
+    document.addEventListener('DOMContentLoaded', callback);
   }
-
-  return module;
 };
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 5 */
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 /*!
@@ -1034,8 +686,7 @@ module.exports = function (module) {
  */
 
 
-var merge = __webpack_require__(8),
-    Row = __webpack_require__(11);
+var Row = __webpack_require__(6);
 /**
  * Create a new, empty row.
  *
@@ -1219,7 +870,7 @@ module.exports = function (input, config) {
   var boxSpacing = {};
   config = config || {}; // Merge defaults and config passed in
 
-  layoutConfig = merge(defaults, config); // Sort out padding and spacing values
+  layoutConfig = Object.assign(defaults, config); // Sort out padding and spacing values
 
   containerPadding.top = !isNaN(parseFloat(layoutConfig.containerPadding.top)) ? layoutConfig.containerPadding.top : layoutConfig.containerPadding;
   containerPadding.right = !isNaN(parseFloat(layoutConfig.containerPadding.right)) ? layoutConfig.containerPadding.right : layoutConfig.containerPadding;
@@ -1254,15 +905,15 @@ module.exports = function (input, config) {
 };
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 6 */
+/***/ (function(module) {
 
 /*!
  * Copyright 2019 SmugMug, Inc.
  * Licensed under the terms of the MIT license. Please see LICENSE file in the project root for terms.
  * @license
  */
-var merge = __webpack_require__(8);
+
 /**
  * Row
  * Wrapper for each row in a justified layout.
@@ -1282,8 +933,6 @@ var merge = __webpack_require__(8);
  * @param params.widowLayoutStyle {String} If widows are visible, how should they be laid out?
  * @constructor
  */
-
-
 var Row = module.exports = function (params) {
   // Top of row, relative to container
   this.top = params.top; // Left side of row relative to container (equal to container left padding)
@@ -1360,7 +1009,7 @@ Row.prototype = {
     if (newAspectRatio < this.minAspectRatio) {
       // New aspect ratio is too narrow / scaled row height is too tall.
       // Accept this item and leave row open for more items.
-      this.items.push(merge(itemData));
+      this.items.push(Object.assign({}, itemData));
       return true;
     } else if (newAspectRatio > this.maxAspectRatio) {
       // New aspect ratio is too wide / scaled row height will be too short.
@@ -1369,7 +1018,7 @@ Row.prototype = {
       if (this.items.length === 0) {
         // When there are no existing items, force acceptance of the new item and complete the layout.
         // This is the pano special case.
-        this.items.push(merge(itemData));
+        this.items.push(Object.assign({}, itemData));
         this.completeLayout(rowWidthWithoutSpacing / newAspectRatio, 'justify');
         return true;
       } // Calculate width/aspect ratio for row before adding new item
@@ -1388,14 +1037,14 @@ Row.prototype = {
       } else {
         // Row with new item is us closer to target than row without;
         // accept the new item and complete the row layout.
-        this.items.push(merge(itemData));
+        this.items.push(Object.assign({}, itemData));
         this.completeLayout(rowWidthWithoutSpacing / newAspectRatio, 'justify');
         return true;
       }
     } else {
       // New aspect ratio / scaled row height is within tolerance;
       // accept the new item and complete the row layout.
-      this.items.push(merge(itemData));
+      this.items.push(Object.assign({}, itemData));
       this.completeLayout(rowWidthWithoutSpacing / newAspectRatio, 'justify');
       return true;
     }
@@ -1528,5 +1177,193 @@ Row.prototype = {
   }
 };
 
+/***/ }),
+/* 7 */
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var rafSchd = function rafSchd(fn) {
+  var lastArgs = [];
+  var frameId = null;
+
+  var wrapperFn = function wrapperFn() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    lastArgs = args;
+
+    if (frameId) {
+      return;
+    }
+
+    frameId = requestAnimationFrame(function () {
+      frameId = null;
+      fn.apply(void 0, lastArgs);
+    });
+  };
+
+  wrapperFn.cancel = function () {
+    if (!frameId) {
+      return;
+    }
+
+    cancelAnimationFrame(frameId);
+    frameId = null;
+  };
+
+  return wrapperFn;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (rafSchd);
+
 /***/ })
-/******/ ]);
+/******/ 	]);
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	!function() {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	!function() {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = function(exports) {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+!function() {
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var global__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(global__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fjGallery_esm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+ // no conflict
+
+var oldPlugin = global__WEBPACK_IMPORTED_MODULE_0__.window.fjGallery;
+global__WEBPACK_IMPORTED_MODULE_0__.window.fjGallery = _fjGallery_esm__WEBPACK_IMPORTED_MODULE_1__["default"];
+
+global__WEBPACK_IMPORTED_MODULE_0__.window.fjGallery.noConflict = function () {
+  global__WEBPACK_IMPORTED_MODULE_0__.window.fjGallery = oldPlugin;
+  return this;
+}; // jQuery support
+
+
+if (typeof global__WEBPACK_IMPORTED_MODULE_0__.jQuery !== 'undefined') {
+  // add data to jQuery .data('fjGallery')
+  var oldInit = global__WEBPACK_IMPORTED_MODULE_0__.window.fjGallery.constructor.prototype.init;
+
+  global__WEBPACK_IMPORTED_MODULE_0__.window.fjGallery.constructor.prototype.init = function () {
+    this.jQcontainer = (0,global__WEBPACK_IMPORTED_MODULE_0__.jQuery)(this.$container);
+    this.jQcontainer.data('fjGallery', this);
+
+    if (oldInit) {
+      oldInit.call(this);
+    }
+  }; // remove data from jQuery .data('fjGallery')
+
+
+  var oldDestroy = global__WEBPACK_IMPORTED_MODULE_0__.window.fjGallery.constructor.prototype.destroy;
+
+  global__WEBPACK_IMPORTED_MODULE_0__.window.fjGallery.constructor.prototype.destroy = function () {
+    if (this.jQcontainer) {
+      this.jQcontainer.removeData('fjGallery');
+    }
+
+    if (oldDestroy) {
+      oldDestroy.call(this);
+    }
+  };
+
+  var jQueryPlugin = function jQueryPlugin() {
+    var args = arguments || [];
+    Array.prototype.unshift.call(args, this);
+    var res = _fjGallery_esm__WEBPACK_IMPORTED_MODULE_1__["default"].apply(global__WEBPACK_IMPORTED_MODULE_0__.window, args);
+    return _typeof(res) !== 'object' ? res : this;
+  };
+
+  jQueryPlugin.constructor = _fjGallery_esm__WEBPACK_IMPORTED_MODULE_1__["default"].constructor; // no conflict
+
+  var oldJqPlugin = global__WEBPACK_IMPORTED_MODULE_0__.jQuery.fn.fjGallery;
+  global__WEBPACK_IMPORTED_MODULE_0__.jQuery.fn.fjGallery = jQueryPlugin;
+
+  global__WEBPACK_IMPORTED_MODULE_0__.jQuery.fn.fjGallery.noConflict = function () {
+    global__WEBPACK_IMPORTED_MODULE_0__.jQuery.fn.fjGallery = oldJqPlugin;
+    return this;
+  };
+}
+}();
+/******/ })()
+;
