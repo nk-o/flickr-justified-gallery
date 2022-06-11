@@ -1,92 +1,92 @@
 .fj-gallery {
-    padding: 10px;
+  padding: 10px;
 }
 
 /* demo styles */
 *, *:after, *:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    font-size: 18px;
-    margin: 0;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 18px;
+  margin: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 h1 {
-    font-size: 30px;
-    margin-top: 0;
-    margin-bottom: 15px;
+  font-size: 30px;
+  margin-top: 0;
+  margin-bottom: 15px;
 }
 h1 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 p {
-    margin-top: 0;
-    margin-bottom: 5px;
+  margin-top: 0;
+  margin-bottom: 5px;
 }
 p ~ p,
 p ~ div {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 small {
-    font-size: 75%;
-    color: #606060;
+  font-size: 75%;
+  color: #606060;
 }
 a {
-    color: #9448a0;
-    transition: .3s color;
+  color: #9448a0;
+  transition: .3s color;
 }
 a:hover, a:focus {
-    color: #484ca0;
+  color: #484ca0;
 }
 
 /* Github buttons */
 .github-buttons {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 /* gap */
 .demo-gap {
-    padding: 50px;
-    overflow: hidden;
+  padding: 50px;
+  overflow: hidden;
 }
 .demo-gap .container {
-    max-width: 800px;
-    margin: 0 auto;
+  max-width: 800px;
+  margin: 0 auto;
 }
 .demo-gap-half {
-    display: table;
-    width: 100%;
+  display: table;
+  width: 100%;
 }
 .demo-gap-half > div {
-    display: table-cell;
-    width: 50%;
+  display: table-cell;
+  width: 50%;
 }
 
 /* Demo Content */
 .demo-content {
-    background-color: #f7f7f7;
-    padding: 80px;
+  background-color: #f7f7f7;
+  padding: 80px;
 }
 
 
 /* Float */
 .demo-float-left {
-    float: left;
+  float: left;
 }
 .demo-float-right {
-    float: right;
+  float: right;
 }
 
 /* Mobile */
 @media screen and (max-width: 500px) {
-    .demo-gap,
-    .demo-content {
-        padding: 50px 30px;
-    }
+  .demo-gap,
+  .demo-content {
+    padding: 50px 30px;
+  }
 }

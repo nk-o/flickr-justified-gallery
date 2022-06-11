@@ -1,16 +1,33 @@
-# Flickr's Justified Gallery
+# Flickr's Justified Gallery <!-- omit in toc -->
 
-Flickr justified images gallery based on [https://github.com/flickr/justified-layout](https://github.com/flickr/justified-layout).
+![fjGallery.min.js](https://img.badgesize.io/nk-o/flickr-justified-gallery/master/dist/fjGallery.min.js?compression=gzip)
 
-## [Demo](https://free.nkdev.info/flickr-justified-gallery/)
+Flickr justified images gallery layout.
 
-## Sizes
+## [Online Demo](https://flickr-justified-gallery.nkdev.info)
 
- File                   | Gzipped Size
-:-----------------------|:------------------------------------------------------------------------------------------------|
-fjGallery.min.js         | ![fjGallery.min.js](https://img.badgesize.io/nk-o/flickr-justified-gallery/master/dist/fjGallery.min.js?compression=gzip)
+## Table of Contents <!-- omit in toc -->
 
-## Usage with WordPress
+- [Online Demo](#online-demo)
+- [WordPress Plugin](#wordpress-plugin)
+- [Import fjGallery](#import-fjgallery)
+  - [ESM](#esm)
+  - [ESM + Skypack](#esm--skypack)
+  - [UMD](#umd)
+  - [UMD + UNPKG](#umd--unpkg)
+  - [CJS (Bundlers like Webpack)](#cjs-bundlers-like-webpack)
+- [Add Styles](#add-styles)
+- [Prepare HTML](#prepare-html)
+- [Run fjGallery](#run-fjgallery)
+  - [A. JavaScript way](#a-javascript-way)
+  - [B. jQuery way](#b-jquery-way)
+- [Options](#options)
+- [Events](#events)
+- [Methods](#methods)
+  - [Call methods example](#call-methods-example)
+- [For Developers](#for-developers)
+
+## WordPress Plugin
 
 [![Visual Portfolio](https://a.nkdev.info/visual-portfolio/preview.jpg?v=2)](https://visualportfolio.co/)
 
@@ -18,55 +35,85 @@ We made WordPress plugin to easily create image galleries and portfolios in your
 
 Demo: <https://visualportfolio.co/>
 
-Download: <https://nkdev.info/downloads/visual-portfolio/>
+Download: <https://wordpress.org/plugins/visual-portfolio/>
 
-## Getting Started
+## Import fjGallery
 
-### ES6
+Use one of the following examples to import fjGallery.
 
-`npm install flickr-justified-gallery --save`
+### ESM
+
+We provide a version of fjGallery built as ESM (fjGallery.esm.js and fjGallery.esm.min.js) which allows you to use fjGallery as a module in your browser, if your [targeted browsers support it](https://caniuse.com/es6-module).
+
+```html
+<script type="module">
+  import fjGallery from "fjGallery.esm.min.js";
+</script>
+```
+
+### ESM + [Skypack](https://www.skypack.dev/)
+
+```html
+<script type="module">
+  import fjGallery from "https://cdn.skypack.dev/flickr-justified-gallery@2.1?min";
+</script>
+```
+
+### UMD
+
+fjGallery may be also used in a traditional way by including script in HTML and using library by accessing `window.fjGallery`.
+
+```html
+<link href="fjGallery.css" rel="stylesheet">
+<script src="fjGallery.min.js"></script>
+```
+
+### UMD + [UNPKG](https://unpkg.com/)
+
+```html
+<link href="https://unpkg.com/flickr-justified-gallery@2.1/dist/fjGallery.css" rel="stylesheet">
+<script src="https://unpkg.com/flickr-justified-gallery@2.1"></script>
+```
+
+### CJS (Bundlers like Webpack)
+
+Install fjGallery as a Node.js module using npm
+
+```
+npm install flickr-justified-gallery
+```
+
+Import fjGallery by adding this line to your app's entry point (usually `index.js` or `app.js`):
 
 ```javascript
-import fjGallery from 'flickr-justified-gallery';
+import fjGallery from "flickr-justified-gallery";
 ```
 
-### Browser
+## Add Styles
 
-```html
-<script src="flickr-justified-gallery/dist/fjGallery.min.js"></script>
-<link href="flickr-justified-gallery/dist/fjGallery/fjGallery.css" rel="stylesheet">
-```
+These styles required to set proper image position. Import style from `/dist/fjGallery.css`.
 
-#### CDN
-
-Link directly from [unpkg](https://unpkg.com/)
-
-```html
-<script src="https://unpkg.com/flickr-justified-gallery@1/dist/fjGallery.min.js"></script>
-<link href="https://unpkg.com/flickr-justified-gallery@1/dist/fjGallery.css" rel="stylesheet">
-```
-
-## Set up your HTML
+## Prepare HTML
 
 ```html
 <div class="fj-gallery">
-    <div class="fj-gallery-item">
-        <img src="<image_url_here>" alt="" width="200" height="200">
-    </div>
-    <div class="fj-gallery-item">
-        <img src="<image_url_here>" alt="" width="200" height="200">
-    </div>
-    ...
+  <div class="fj-gallery-item">
+    <img src="<image_url_here>" alt="" width="200" height="200">
+  </div>
+  <div class="fj-gallery-item">
+    <img src="<image_url_here>" alt="" width="200" height="200">
+  </div>
+  ...
 </div>
 ```
 
-## Call the plugin
+## Run fjGallery
 
 ### A. JavaScript way
 
 ```javascript
 fjGallery(document.querySelectorAll('.fj-gallery'), {
-    itemSelector: '.fj-gallery-item'
+  itemSelector: '.fj-gallery-item'
 });
 ```
 
@@ -74,8 +121,17 @@ fjGallery(document.querySelectorAll('.fj-gallery'), {
 
 ```javascript
 $('.fj-gallery').fjGallery({
-    itemSelector: '.fj-gallery-item'
+  itemSelector: '.fj-gallery-item'
 });
+```
+
+#### No conflict (only if you use jQuery) <!-- omit in toc -->
+
+Sometimes to prevent existing namespace collisions you may call `.noConflict` on the script to revert the value of.
+
+```javascript
+const fjGalleryPlugin = $.fn.fjGallery.noConflict() // return $.fn.fjGallery to previously assigned value
+$.fn.newFjGallery = fjGalleryPlugin // give $().newFjGallery the fjGallery functionality
 ```
 
 ## Options
@@ -124,30 +180,18 @@ fjGallery(document.querySelectorAll('.fj-gallery'), 'destroy');
 $('.fj-gallery').fjGallery('destroy');
 ```
 
-## No conflict
-
-If you already have global ***fjGallery*** variable or ***jQuery.fn.fjGallery***, you can rename plugin.
-
-```javascript
-// JavaScript:
-var newFjGallery = fjGallery.noConflict();
-
-// jQuery:
-jQuery.fn.newFjGallery = jQuery.fn.fjGallery.noConflict();
-```
-
 ## For Developers
 
-### Installation
+### Installation <!-- omit in toc -->
 
-* Run `npm install` in the command line. Or if you need to update some dependencies, run `npm update`
+* Run `npm install` in the command line
 
-### Building
+### Building <!-- omit in toc -->
 
 * `npm run dev` to run build and start local server with files watcher
 * `npm run build` to run build
 
-### Linting
+### Linting <!-- omit in toc -->
 
 * `npm run js-lint` to show eslint errors
 * `npm run js-lint-fix` to automatically fix some of the eslint errors
