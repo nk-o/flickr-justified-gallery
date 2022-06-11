@@ -6,8 +6,8 @@ const $ = global.jQuery;
 // jQuery support
 if ('undefined' !== typeof $) {
   // add data to jQuery .data('fjGallery')
-  const oldInit = global.fjGallery.constructor.prototype.init;
-  global.fjGallery.constructor.prototype.init = function () {
+  const oldInit = fjGallery.constructor.prototype.init;
+  fjGallery.constructor.prototype.init = function () {
     this.$container = $(this.$container);
     this.$container.data('fjGallery', this);
     if (oldInit) {
@@ -16,8 +16,8 @@ if ('undefined' !== typeof $) {
   };
 
   // remove data from jQuery .data('fjGallery')
-  const oldDestroy = global.fjGallery.constructor.prototype.destroy;
-  global.fjGallery.constructor.prototype.destroy = function () {
+  const oldDestroy = fjGallery.constructor.prototype.destroy;
+  fjGallery.constructor.prototype.destroy = function () {
     if (this.$container) {
       this.$container.removeData('fjGallery');
     }
