@@ -34,6 +34,11 @@ function getImgDimensions(img, cb) {
             return;
         }
 
+        // check for non-zero, non-undefined naturalWidth
+        if (!img.naturalWidth) {
+            return;
+        }
+
         hasSize = {
             width: img.naturalWidth,
             height: img.naturalHeight,
