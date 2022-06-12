@@ -8,8 +8,8 @@ if ('undefined' !== typeof $) {
   // add data to jQuery .data('fjGallery')
   const oldInit = fjGallery.constructor.prototype.init;
   fjGallery.constructor.prototype.init = function () {
-    this.$container = $(this.$container);
-    this.$container.data('fjGallery', this);
+    $(this.$container).data('fjGallery', this);
+
     if (oldInit) {
       oldInit.call(this);
     }
@@ -19,7 +19,7 @@ if ('undefined' !== typeof $) {
   const oldDestroy = fjGallery.constructor.prototype.destroy;
   fjGallery.constructor.prototype.destroy = function () {
     if (this.$container) {
-      this.$container.removeData('fjGallery');
+      $(this.$container).removeData('fjGallery');
     }
     if (oldDestroy) {
       oldDestroy.call(this);
