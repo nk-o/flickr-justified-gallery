@@ -1,5 +1,5 @@
 /*!
- * Flickr's Justified Gallery [fjGallery] v2.1.1 (https://flickr-justified-gallery.nkdev.info)
+ * Flickr's Justified Gallery [fjGallery] v2.1.2 (https://flickr-justified-gallery.nkdev.info)
  * Copyright 2022 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/flickr-justified-gallery/blob/master/LICENSE)
  */
@@ -1187,8 +1187,7 @@
     const oldInit = fjGallery.constructor.prototype.init;
 
     fjGallery.constructor.prototype.init = function () {
-      this.$container = $(this.$container);
-      this.$container.data('fjGallery', this);
+      $(this.$container).data('fjGallery', this);
 
       if (oldInit) {
         oldInit.call(this);
@@ -1200,7 +1199,7 @@
 
     fjGallery.constructor.prototype.destroy = function () {
       if (this.$container) {
-        this.$container.removeData('fjGallery');
+        $(this.$container).removeData('fjGallery');
       }
 
       if (oldDestroy) {
