@@ -4,17 +4,16 @@
 
 Flickr justified images gallery layout.
 
-## [Online Demo](https://flickr-justified-gallery.nkdev.info)
+## [Online Demo](https://flickr-justified-gallery.nkdev.info) <!-- omit in toc -->
 
 ## Table of Contents <!-- omit in toc -->
 
-- [Online Demo](#online-demo)
 - [WordPress Plugin](#wordpress-plugin)
 - [Import fjGallery](#import-fjgallery)
   - [ESM](#esm)
-  - [ESM + Skypack](#esm--skypack)
+  - [ESM CDN](#esm-cdn)
   - [UMD](#umd)
-  - [UMD + UNPKG](#umd--unpkg)
+  - [UMD CDN](#umd-cdn)
   - [CJS (Bundlers like Webpack)](#cjs-bundlers-like-webpack)
 - [Add Styles](#add-styles)
 - [Prepare HTML](#prepare-html)
@@ -51,11 +50,11 @@ We provide a version of fjGallery built as ESM (fjGallery.esm.js and fjGallery.e
 </script>
 ```
 
-### ESM + [Skypack](https://www.skypack.dev/)
+### ESM CDN
 
 ```html
 <script type="module">
-  import fjGallery from "https://cdn.skypack.dev/flickr-justified-gallery@2.1?min";
+  import fjGallery from "https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2.1/+esm";
 </script>
 ```
 
@@ -68,11 +67,11 @@ fjGallery may be also used in a traditional way by including script in HTML and 
 <script src="fjGallery.min.js"></script>
 ```
 
-### UMD + [UNPKG](https://unpkg.com/)
+### UMD CDN
 
 ```html
-<link href="https://unpkg.com/flickr-justified-gallery@2.1/dist/fjGallery.css" rel="stylesheet">
-<script src="https://unpkg.com/flickr-justified-gallery@2.1"></script>
+<link href="https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2.1/dist/fjGallery.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2.1/dist/fjGallery.min.js"></script>
 ```
 
 ### CJS (Bundlers like Webpack)
