@@ -1,6 +1,6 @@
 /*!
  * Flickr's Justified Gallery [fjGallery] v2.1.2 (https://flickr-justified-gallery.nkdev.info)
- * Copyright 2022 nK <https://nkdev.info>
+ * Copyright 2024 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/flickr-justified-gallery/blob/master/LICENSE)
  */
 'use strict';
@@ -1059,7 +1059,8 @@ class FJGallery {
           display: '',
           position: 'absolute',
           transform: `translateX(${justifiedData.boxes[i].left}px) translateY(${justifiedData.boxes[i].top + additionalTopOffset}px) translateZ(0)`,
-          width: `${justifiedData.boxes[i].width}px`
+          width: `${justifiedData.boxes[i].width}px`,
+          height: `${justifiedData.boxes[i].height}px`
         }); // calculate actual items height.
 
         if (self.options.calculateItemsHeight) {
