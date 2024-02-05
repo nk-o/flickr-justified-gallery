@@ -44,6 +44,8 @@ class FJGallery {
       rowHeight: 320,
       rowHeightTolerance: 0.25, // [0, 1]
       maxRowsCount: Number.POSITIVE_INFINITY,
+      edgeCaseMinRowHeight: 0.5,
+      edgeCaseMaxRowHeight: 2.5,
       lastRow: 'left', // left, center, right, hide
       transitionDuration: '0.3s',
       calculateItemsHeight: false,
@@ -240,6 +242,8 @@ class FJGallery {
       targetRowHeight: self.options.rowHeight,
       targetRowHeightTolerance: self.options.rowHeightTolerance,
       maxNumRows: self.options.maxRowsCount,
+      edgeCaseMinRowHeight: self.options.edgeCaseMinRowHeight,
+      edgeCaseMaxRowHeight: self.options.edgeCaseMaxRowHeight,
       showWidows: self.options.lastRow !== 'hide',
     };
     const justifiedData = justifiedLayout(justifyArray, justifiedOptions);
