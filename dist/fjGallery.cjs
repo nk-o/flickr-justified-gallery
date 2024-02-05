@@ -1,5 +1,5 @@
 /*!
- * Flickr's Justified Gallery [fjGallery] v2.1.2 (https://flickr-justified-gallery.nkdev.info)
+ * Flickr's Justified Gallery [fjGallery] v2.2.0 (https://flickr-justified-gallery.nkdev.info)
  * Copyright 2024 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/flickr-justified-gallery/blob/master/LICENSE)
  */
@@ -1023,7 +1023,7 @@ class FJGallery {
     self.images.forEach((data, imgI) => {
       if (justifiedData.boxes[i] && data.width && data.height) {
         // calculate additional offset based on actual items height.
-        if (self.options.calculateItemsHeight && typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' && Object.keys(rowsMaxHeight).length) {
+        if (self.options.calculateItemsHeight && typeof rowsMaxHeight[justifiedData.boxes[i].row] === 'undefined' && Object.keys(rowsMaxHeight).length) {
           additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[imgI - 1].height;
         }
         if (self.options.transitionDuration && self.justifyCount > 1) {
@@ -1039,8 +1039,8 @@ class FJGallery {
         // calculate actual items height.
         if (self.options.calculateItemsHeight) {
           const rect = data.$item.getBoundingClientRect();
-          if (typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' || rowsMaxHeight[justifiedData.boxes[i].top] < rect.height) {
-            rowsMaxHeight[justifiedData.boxes[i].top] = rect.height;
+          if (typeof rowsMaxHeight[justifiedData.boxes[i].row] === 'undefined' || rowsMaxHeight[justifiedData.boxes[i].row] < rect.height) {
+            rowsMaxHeight[justifiedData.boxes[i].row] = rect.height;
           }
         }
         i += 1;
