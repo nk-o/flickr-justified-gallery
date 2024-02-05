@@ -1,6 +1,6 @@
 /*!
  * Flickr's Justified Gallery [fjGallery] v2.1.2 (https://flickr-justified-gallery.nkdev.info)
- * Copyright 2022 nK <https://nkdev.info>
+ * Copyright 2024 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/flickr-justified-gallery/blob/master/LICENSE)
  */
 'use strict';
@@ -30,18 +30,17 @@
  */
 function throttle(delay, callback, options) {
   var _ref = options || {},
-      _ref$noTrailing = _ref.noTrailing,
-      noTrailing = _ref$noTrailing === void 0 ? false : _ref$noTrailing,
-      _ref$noLeading = _ref.noLeading,
-      noLeading = _ref$noLeading === void 0 ? false : _ref$noLeading,
-      _ref$debounceMode = _ref.debounceMode,
-      debounceMode = _ref$debounceMode === void 0 ? undefined : _ref$debounceMode;
+    _ref$noTrailing = _ref.noTrailing,
+    noTrailing = _ref$noTrailing === void 0 ? false : _ref$noTrailing,
+    _ref$noLeading = _ref.noLeading,
+    noLeading = _ref$noLeading === void 0 ? false : _ref$noLeading,
+    _ref$debounceMode = _ref.debounceMode,
+    debounceMode = _ref$debounceMode === void 0 ? undefined : _ref$debounceMode;
   /*
    * After wrapper has stopped being called, this timeout ensures that
    * `callback` is executed at the proper times in `throttle` and `end`
    * debounce modes.
    */
-
 
   var timeoutID;
   var cancelled = false; // Keep track of the last time `callback` was executed.
@@ -54,12 +53,10 @@ function throttle(delay, callback, options) {
     }
   } // Function to cancel next exec
 
-
   function cancel(options) {
     var _ref2 = options || {},
-        _ref2$upcomingOnly = _ref2.upcomingOnly,
-        upcomingOnly = _ref2$upcomingOnly === void 0 ? false : _ref2$upcomingOnly;
-
+      _ref2$upcomingOnly = _ref2.upcomingOnly,
+      upcomingOnly = _ref2$upcomingOnly === void 0 ? false : _ref2$upcomingOnly;
     clearExistingTimeout();
     cancelled = !upcomingOnly;
   }
@@ -69,19 +66,15 @@ function throttle(delay, callback, options) {
    * is executed.
    */
 
-
   function wrapper() {
     for (var _len = arguments.length, arguments_ = new Array(_len), _key = 0; _key < _len; _key++) {
       arguments_[_key] = arguments[_key];
     }
-
     var self = this;
     var elapsed = Date.now() - lastExec;
-
     if (cancelled) {
       return;
     } // Execute `callback` and update the `lastExec` timestamp.
-
 
     function exec() {
       lastExec = Date.now();
@@ -92,11 +85,9 @@ function throttle(delay, callback, options) {
      * to allow future `callback` executions.
      */
 
-
     function clear() {
       timeoutID = undefined;
     }
-
     if (!noLeading && debounceMode && !timeoutID) {
       /*
        * Since `wrapper` is being called for the first time and
@@ -105,9 +96,7 @@ function throttle(delay, callback, options) {
        */
       exec();
     }
-
     clearExistingTimeout();
-
     if (debounceMode === undefined && elapsed > delay) {
       if (noLeading) {
         /*
@@ -116,7 +105,6 @@ function throttle(delay, callback, options) {
          * to execute after `delay` ms.
          */
         lastExec = Date.now();
-
         if (!noTrailing) {
           timeoutID = setTimeout(debounceMode ? clear : exec, delay);
         }
@@ -142,13 +130,12 @@ function throttle(delay, callback, options) {
       timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === undefined ? delay - elapsed : delay);
     }
   }
-
   wrapper.cancel = cancel; // Return the wrapper function.
 
   return wrapper;
 }
-/* eslint-disable no-undefined */
 
+/* eslint-disable no-undefined */
 /**
  * Debounce execution of a function. Debouncing, unlike throttling,
  * guarantees that a function is only executed a single time, either at the
@@ -165,12 +152,10 @@ function throttle(delay, callback, options) {
  * @returns {Function} A new, debounced function.
  */
 
-
 function debounce(delay, callback, options) {
   var _ref = options || {},
-      _ref$atBegin = _ref.atBegin,
-      atBegin = _ref$atBegin === void 0 ? false : _ref$atBegin;
-
+    _ref$atBegin = _ref.atBegin,
+    atBegin = _ref$atBegin === void 0 ? false : _ref$atBegin;
   return throttle(delay, callback, {
     debounceMode: atBegin !== false
   });
@@ -179,43 +164,33 @@ function debounce(delay, callback, options) {
 var rafSchd = function rafSchd(fn) {
   var lastArgs = [];
   var frameId = null;
-
   var wrapperFn = function wrapperFn() {
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
-
     lastArgs = args;
-
     if (frameId) {
       return;
     }
-
     frameId = requestAnimationFrame(function () {
       frameId = null;
       fn.apply(void 0, lastArgs);
     });
   };
-
   wrapperFn.cancel = function () {
     if (!frameId) {
       return;
     }
-
     cancelAnimationFrame(frameId);
     frameId = null;
   };
-
   return wrapperFn;
 };
 
-var row = {exports: {}};
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
 
-/*!
- * Copyright 2019 SmugMug, Inc.
- * Licensed under the terms of the MIT license. Please see LICENSE file in the project root for terms.
- * @license
- */
 /**
  * Row
  * Wrapper for each row in a justified layout.
@@ -223,6 +198,7 @@ var row = {exports: {}};
  *
  * @param {Object} layoutConfig - The same as that passed
  * @param {Object} Initialization parameters. The following are all required:
+ * @param params.index {Number} The index of this row
  * @param params.top {Number} Top of row, relative to container
  * @param params.left {Number} Left side of row relative to container (equal to container left padding)
  * @param params.width {Number} Width of row, not including container padding
@@ -235,35 +211,45 @@ var row = {exports: {}};
  * @param params.widowLayoutStyle {String} If widows are visible, how should they be laid out?
  * @constructor
  */
+const Row = function (params) {
+  // The index of this row
+  this.index = params.index;
 
-var Row$1 = row.exports = function (params) {
   // Top of row, relative to container
-  this.top = params.top; // Left side of row relative to container (equal to container left padding)
+  this.top = params.top;
 
-  this.left = params.left; // Width of row, not including container padding
+  // Left side of row relative to container (equal to container left padding)
+  this.left = params.left;
 
-  this.width = params.width; // Horizontal spacing between items
+  // Width of row, not including container padding
+  this.width = params.width;
 
-  this.spacing = params.spacing; // Row height calculation values
+  // Horizontal spacing between items
+  this.spacing = params.spacing;
 
+  // Row height calculation values
   this.targetRowHeight = params.targetRowHeight;
   this.targetRowHeightTolerance = params.targetRowHeightTolerance;
   this.minAspectRatio = this.width / params.targetRowHeight * (1 - params.targetRowHeightTolerance);
-  this.maxAspectRatio = this.width / params.targetRowHeight * (1 + params.targetRowHeightTolerance); // Edge case row height minimum/maximum
+  this.maxAspectRatio = this.width / params.targetRowHeight * (1 + params.targetRowHeightTolerance);
 
+  // Edge case row height minimum/maximum
   this.edgeCaseMinRowHeight = params.edgeCaseMinRowHeight;
-  this.edgeCaseMaxRowHeight = params.edgeCaseMaxRowHeight; // Widow layout direction
+  this.edgeCaseMaxRowHeight = params.edgeCaseMaxRowHeight;
 
-  this.widowLayoutStyle = params.widowLayoutStyle; // Full width breakout rows
+  // Widow layout direction
+  this.widowLayoutStyle = params.widowLayoutStyle;
 
-  this.isBreakoutRow = params.isBreakoutRow; // Store layout data for each item in row
+  // Full width breakout rows
+  this.isBreakoutRow = params.isBreakoutRow;
 
-  this.items = []; // Height remains at 0 until it's been calculated
+  // Store layout data for each item in row
+  this.items = [];
 
+  // Height remains at 0 until it's been calculated
   this.height = 0;
 };
-
-Row$1.prototype = {
+Row.prototype = {
   /**
    * Attempt to add a single item to the row.
    * This is the heart of the justified algorithm.
@@ -285,17 +271,18 @@ Row$1.prototype = {
    * @return {Boolean} True if successfully added; false if rejected.
    */
   addItem: function (itemData) {
-    var newItems = this.items.concat(itemData),
-        // Calculate aspect ratios for items only; exclude spacing
-    rowWidthWithoutSpacing = this.width - (newItems.length - 1) * this.spacing,
-        newAspectRatio = newItems.reduce(function (sum, item) {
+    const newItems = this.items.concat(itemData);
+    // Calculate aspect ratios for items only; exclude spacing
+    const rowWidthWithoutSpacing = this.width - (newItems.length - 1) * this.spacing;
+    const newAspectRatio = newItems.reduce(function (sum, item) {
       return sum + item.aspectRatio;
-    }, 0),
-        targetAspectRatio = rowWidthWithoutSpacing / this.targetRowHeight,
-        previousRowWidthWithoutSpacing,
-        previousAspectRatio,
-        previousTargetAspectRatio; // Handle big full-width breakout photos if we're doing them
+    }, 0);
+    const targetAspectRatio = rowWidthWithoutSpacing / this.targetRowHeight;
+    let previousRowWidthWithoutSpacing;
+    let previousAspectRatio;
+    let previousTargetAspectRatio;
 
+    // Handle big full-width breakout photos if we're doing them
     if (this.isBreakoutRow) {
       // Only do it if there's no other items in this row
       if (this.items.length === 0) {
@@ -303,56 +290,55 @@ Row$1.prototype = {
         if (itemData.aspectRatio >= 1) {
           // Close out the row with a full width photo
           this.items.push(itemData);
-          this.completeLayout(rowWidthWithoutSpacing / itemData.aspectRatio, 'justify');
+          this.completeLayout(rowWidthWithoutSpacing / itemData.aspectRatio, "justify");
           return true;
         }
       }
     }
-
     if (newAspectRatio < this.minAspectRatio) {
       // New aspect ratio is too narrow / scaled row height is too tall.
       // Accept this item and leave row open for more items.
+
       this.items.push(Object.assign({}, itemData));
       return true;
     } else if (newAspectRatio > this.maxAspectRatio) {
       // New aspect ratio is too wide / scaled row height will be too short.
       // Accept item if the resulting aspect ratio is closer to target than it would be without the item.
       // NOTE: Any row that falls into this block will require cropping/padding on individual items.
+
       if (this.items.length === 0) {
         // When there are no existing items, force acceptance of the new item and complete the layout.
         // This is the pano special case.
         this.items.push(Object.assign({}, itemData));
-        this.completeLayout(rowWidthWithoutSpacing / newAspectRatio, 'justify');
+        this.completeLayout(rowWidthWithoutSpacing / newAspectRatio, "justify");
         return true;
-      } // Calculate width/aspect ratio for row before adding new item
+      }
 
-
+      // Calculate width/aspect ratio for row before adding new item
       previousRowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing;
       previousAspectRatio = this.items.reduce(function (sum, item) {
         return sum + item.aspectRatio;
       }, 0);
       previousTargetAspectRatio = previousRowWidthWithoutSpacing / this.targetRowHeight;
-
       if (Math.abs(newAspectRatio - targetAspectRatio) > Math.abs(previousAspectRatio - previousTargetAspectRatio)) {
         // Row with new item is us farther away from target than row without; complete layout and reject item.
-        this.completeLayout(previousRowWidthWithoutSpacing / previousAspectRatio, 'justify');
+        this.completeLayout(previousRowWidthWithoutSpacing / previousAspectRatio, "justify");
         return false;
       } else {
         // Row with new item is us closer to target than row without;
         // accept the new item and complete the row layout.
         this.items.push(Object.assign({}, itemData));
-        this.completeLayout(rowWidthWithoutSpacing / newAspectRatio, 'justify');
+        this.completeLayout(rowWidthWithoutSpacing / newAspectRatio, "justify");
         return true;
       }
     } else {
       // New aspect ratio / scaled row height is within tolerance;
       // accept the new item and complete the row layout.
       this.items.push(Object.assign({}, itemData));
-      this.completeLayout(rowWidthWithoutSpacing / newAspectRatio, 'justify');
+      this.completeLayout(rowWidthWithoutSpacing / newAspectRatio, "justify");
       return true;
     }
   },
-
   /**
    * Check if a row has completed its layout.
    *
@@ -362,7 +348,6 @@ Row$1.prototype = {
   isLayoutComplete: function () {
     return this.height > 0;
   },
-
   /**
    * Set row height and compute item geometry from that height.
    * Will justify items within the row unless instructed not to.
@@ -372,22 +357,22 @@ Row$1.prototype = {
    * @param widowLayoutStyle {String} How should widows display? Supported: left | justify | center
    */
   completeLayout: function (newHeight, widowLayoutStyle) {
-    var itemWidthSum = this.left,
-        rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
-        clampedToNativeRatio,
-        clampedHeight,
-        errorWidthPerItem,
-        roundedCumulativeErrors,
-        singleItemGeometry,
-        centerOffset; // Justify unless explicitly specified otherwise.
+    let itemWidthSum = this.left;
+    const rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing;
+    let clampedToNativeRatio;
+    let clampedHeight;
+    let errorWidthPerItem;
+    let roundedCumulativeErrors;
+    let singleItemGeometry;
+    let centerOffset;
 
-    if (typeof widowLayoutStyle === 'undefined' || ['justify', 'center', 'left'].indexOf(widowLayoutStyle) < 0) {
-      widowLayoutStyle = 'left';
-    } // Clamp row height to edge case minimum/maximum.
+    // Justify unless explicitly specified otherwise.
+    if (typeof widowLayoutStyle === "undefined" || ["justify", "center", "left"].indexOf(widowLayoutStyle) < 0) {
+      widowLayoutStyle = "left";
+    }
 
-
+    // Clamp row height to edge case minimum/maximum.
     clampedHeight = Math.max(this.edgeCaseMinRowHeight, Math.min(newHeight, this.edgeCaseMaxRowHeight));
-
     if (newHeight !== clampedHeight) {
       // If row height was clamped, the resulting row/item aspect ratio will be off,
       // so force it to fit the width (recalculate aspectRatio to match clamped height).
@@ -398,29 +383,32 @@ Row$1.prototype = {
       // If not clamped, leave ratio at 1.0.
       this.height = newHeight;
       clampedToNativeRatio = 1.0;
-    } // Compute item geometry based on newHeight.
+    }
 
-
+    // Compute item geometry based on newHeight.
     this.items.forEach(function (item) {
+      item.row = this.index;
       item.top = this.top;
       item.width = item.aspectRatio * this.height * clampedToNativeRatio;
-      item.height = this.height; // Left-to-right.
+      item.height = this.height;
+
+      // Left-to-right.
       // TODO right to left
       // item.left = this.width - itemWidthSum - item.width;
+      item.left = itemWidthSum;
 
-      item.left = itemWidthSum; // Increment width.
-
+      // Increment width.
       itemWidthSum += item.width + this.spacing;
-    }, this); // If specified, ensure items fill row and distribute error
-    // caused by rounding width and height across all items.
+    }, this);
 
-    if (widowLayoutStyle === 'justify') {
+    // If specified, ensure items fill row and distribute error
+    // caused by rounding width and height across all items.
+    if (widowLayoutStyle === "justify") {
       itemWidthSum -= this.spacing + this.left;
       errorWidthPerItem = (itemWidthSum - this.width) / this.items.length;
       roundedCumulativeErrors = this.items.map(function (item, i) {
         return Math.round((i + 1) * errorWidthPerItem);
       });
-
       if (this.items.length === 1) {
         // For rows with only one item, adjust item width to fill row.
         singleItemGeometry = this.items[0];
@@ -437,7 +425,7 @@ Row$1.prototype = {
           }
         });
       }
-    } else if (widowLayoutStyle === 'center') {
+    } else if (widowLayoutStyle === "center") {
       // Center widows
       centerOffset = (this.width - itemWidthSum) / 2;
       this.items.forEach(function (item) {
@@ -445,7 +433,6 @@ Row$1.prototype = {
       }, this);
     }
   },
-
   /**
    * Force completion of row layout with current items.
    *
@@ -460,14 +447,14 @@ Row$1.prototype = {
     // 	currentAspectRatio = this.items.reduce(function (sum, item) {
     // 		return sum + item.aspectRatio;
     // 	}, 0);
-    if (typeof rowHeight === 'number') {
+
+    if (typeof rowHeight === "number") {
       this.completeLayout(rowHeight, this.widowLayoutStyle);
     } else {
       // Complete using target row height.
       this.completeLayout(this.targetRowHeight, this.widowLayoutStyle);
     }
   },
-
   /**
    * Return layout data for items within row.
    * Note: returns actual list, not a copy.
@@ -481,12 +468,11 @@ Row$1.prototype = {
 };
 
 /*!
- * Copyright 2019 SmugMug, Inc.
+ * Copyright 2019 SmugMug, Inc. | Copyright 2024 nK
  * Licensed under the terms of the MIT license. Please see LICENSE file in the project root for terms.
  * @license
  */
 
-var Row = row.exports;
 /**
  * Create a new, empty row.
  *
@@ -495,30 +481,31 @@ var Row = row.exports;
  * @param layoutData {Object} The current state of the layout
  * @return A new, empty row of the type specified by this layout.
  */
-
 function createNewRow(layoutConfig, layoutData) {
-  var isBreakoutRow; // Work out if this is a full width breakout row
+  let isBreakoutRow;
 
+  // Work out if this is a full width breakout row
   if (layoutConfig.fullWidthBreakoutRowCadence !== false) {
     if ((layoutData._rows.length + 1) % layoutConfig.fullWidthBreakoutRowCadence === 0) {
       isBreakoutRow = true;
     }
   }
-
   return new Row({
+    index: layoutData._rows.length,
     top: layoutData._containerHeight,
     left: layoutConfig.containerPadding.left,
     width: layoutConfig.containerWidth - layoutConfig.containerPadding.left - layoutConfig.containerPadding.right,
     spacing: layoutConfig.boxSpacing.horizontal,
     targetRowHeight: layoutConfig.targetRowHeight,
     targetRowHeightTolerance: layoutConfig.targetRowHeightTolerance,
-    edgeCaseMinRowHeight: 0.5 * layoutConfig.targetRowHeight,
-    edgeCaseMaxRowHeight: 2 * layoutConfig.targetRowHeight,
+    edgeCaseMinRowHeight: layoutConfig.edgeCaseMinRowHeight * layoutConfig.targetRowHeight,
+    edgeCaseMaxRowHeight: layoutConfig.edgeCaseMaxRowHeight * layoutConfig.targetRowHeight,
     rightToLeft: false,
     isBreakoutRow: isBreakoutRow,
     widowLayoutStyle: layoutConfig.widowLayoutStyle
   });
 }
+
 /**
  * Add a completed row to the layout.
  * Note: the row must have already been completed.
@@ -529,16 +516,15 @@ function createNewRow(layoutConfig, layoutData) {
  * @param row {Row} The row to add.
  * @return {Array} Each item added to the row.
  */
-
-
 function addRow(layoutConfig, layoutData, row) {
   layoutData._rows.push(row);
+  layoutData._layoutItems = layoutData._layoutItems.concat(row.getItems());
 
-  layoutData._layoutItems = layoutData._layoutItems.concat(row.getItems()); // Increment the container height
-
+  // Increment the container height
   layoutData._containerHeight += row.height + layoutConfig.boxSpacing.vertical;
   return row.items;
 }
+
 /**
  * Calculate the current layout for all items in the list that require layout.
  * "Layout" means geometry: position within container and size
@@ -549,65 +535,60 @@ function addRow(layoutConfig, layoutData, row) {
  * @param itemLayoutData {Array} Array of items to lay out, with data required to lay out each item
  * @return {Object} The newly-calculated layout, containing the new container height, and lists of layout items
  */
-
-
 function computeLayout(layoutConfig, layoutData, itemLayoutData) {
-  var laidOutItems = [],
-      itemAdded,
-      currentRow,
-      nextToLastRowHeight; // Apply forced aspect ratio if specified, and set a flag.
+  let laidOutItems = [];
+  let itemAdded;
+  let currentRow;
+  let nextToLastRowHeight;
 
+  // Apply forced aspect ratio if specified, and set a flag.
   if (layoutConfig.forceAspectRatio) {
     itemLayoutData.forEach(function (itemData) {
       itemData.forcedAspectRatio = true;
       itemData.aspectRatio = layoutConfig.forceAspectRatio;
     });
-  } // Loop through the items
+  }
 
-
+  // Loop through the items
   itemLayoutData.some(function (itemData, i) {
     if (isNaN(itemData.aspectRatio)) {
       throw new Error("Item " + i + " has an invalid aspect ratio");
-    } // If not currently building up a row, make a new one.
+    }
 
-
+    // If not currently building up a row, make a new one.
     if (!currentRow) {
       currentRow = createNewRow(layoutConfig, layoutData);
-    } // Attempt to add item to the current row.
+    }
 
-
+    // Attempt to add item to the current row.
     itemAdded = currentRow.addItem(itemData);
-
     if (currentRow.isLayoutComplete()) {
       // Row is filled; add it and start a new one
       laidOutItems = laidOutItems.concat(addRow(layoutConfig, layoutData, currentRow));
-
       if (layoutData._rows.length >= layoutConfig.maxNumRows) {
         currentRow = null;
         return true;
       }
+      currentRow = createNewRow(layoutConfig, layoutData);
 
-      currentRow = createNewRow(layoutConfig, layoutData); // Item was rejected; add it to its own row
-
+      // Item was rejected; add it to its own row
       if (!itemAdded) {
         itemAdded = currentRow.addItem(itemData);
-
         if (currentRow.isLayoutComplete()) {
           // If the rejected item fills a row on its own, add the row and start another new one
           laidOutItems = laidOutItems.concat(addRow(layoutConfig, layoutData, currentRow));
-
           if (layoutData._rows.length >= layoutConfig.maxNumRows) {
             currentRow = null;
             return true;
           }
-
           currentRow = createNewRow(layoutConfig, layoutData);
         }
       }
     }
-  }); // Handle any leftover content (orphans) depending on where they lie
-  // in this layout update, and in the total content set.
+  });
 
+  // Handle any leftover content (orphans) depending on where they lie
+  // in this layout update, and in the total content set.
   if (currentRow && currentRow.getItems().length && layoutConfig.showWidows) {
     // Last page of all content or orphan suppression is suppressed; lay out orphans.
     if (layoutData._rows.length) {
@@ -617,21 +598,19 @@ function computeLayout(layoutConfig, layoutData, itemLayoutData) {
       } else {
         nextToLastRowHeight = layoutData._rows[layoutData._rows.length - 1].height;
       }
-
       currentRow.forceComplete(false, nextToLastRowHeight);
     } else {
       // ...else use target height if there is no other row height to reference.
       currentRow.forceComplete(false);
     }
-
     laidOutItems = laidOutItems.concat(addRow(layoutConfig, layoutData, currentRow));
     layoutConfig._widowCount = currentRow.getItems().length;
-  } // We need to clean up the bottom container padding
+  }
+
+  // We need to clean up the bottom container padding
   // First remove the height added for box spacing
-
-
-  layoutData._containerHeight = layoutData._containerHeight - layoutConfig.boxSpacing.vertical; // Then add our bottom container padding
-
+  layoutData._containerHeight = layoutData._containerHeight - layoutConfig.boxSpacing.vertical;
+  // Then add our bottom container padding
   layoutData._containerHeight = layoutData._containerHeight + layoutConfig.containerPadding.bottom;
   return {
     containerHeight: layoutData._containerHeight,
@@ -639,6 +618,7 @@ function computeLayout(layoutConfig, layoutData, itemLayoutData) {
     boxes: layoutData._layoutItems
   };
 }
+
 /**
  * Takes in a bunch of box data and config. Returns
  * geometry to lay them out in a justified view.
@@ -647,30 +627,33 @@ function computeLayout(layoutConfig, layoutData, itemLayoutData) {
  * @param sizes {Array} Array of objects with widths and heights
  * @return {Array} A list of aspect ratios
  */
+function index(input, config) {
+  let layoutConfig = {};
+  const layoutData = {};
 
-
-var lib = function (input, config) {
-  var layoutConfig = {};
-  var layoutData = {}; // Defaults
-
-  var defaults = {
+  // Defaults
+  const defaults = {
     containerWidth: 1060,
     containerPadding: 10,
     boxSpacing: 10,
     targetRowHeight: 320,
     targetRowHeightTolerance: 0.25,
+    edgeCaseMinRowHeight: 0.5,
+    edgeCaseMaxRowHeight: 2.5,
     maxNumRows: Number.POSITIVE_INFINITY,
     forceAspectRatio: false,
     showWidows: true,
     fullWidthBreakoutRowCadence: false,
-    widowLayoutStyle: 'left'
+    widowLayoutStyle: "left"
   };
-  var containerPadding = {};
-  var boxSpacing = {};
-  config = config || {}; // Merge defaults and config passed in
+  const containerPadding = {};
+  const boxSpacing = {};
+  config = config || {};
 
-  layoutConfig = Object.assign(defaults, config); // Sort out padding and spacing values
+  // Merge defaults and config passed in
+  layoutConfig = Object.assign(defaults, config);
 
+  // Sort out padding and spacing values
   containerPadding.top = !isNaN(parseFloat(layoutConfig.containerPadding.top)) ? layoutConfig.containerPadding.top : layoutConfig.containerPadding;
   containerPadding.right = !isNaN(parseFloat(layoutConfig.containerPadding.right)) ? layoutConfig.containerPadding.right : layoutConfig.containerPadding;
   containerPadding.bottom = !isNaN(parseFloat(layoutConfig.containerPadding.bottom)) ? layoutConfig.containerPadding.bottom : layoutConfig.containerPadding;
@@ -678,8 +661,9 @@ var lib = function (input, config) {
   boxSpacing.horizontal = !isNaN(parseFloat(layoutConfig.boxSpacing.horizontal)) ? layoutConfig.boxSpacing.horizontal : layoutConfig.boxSpacing;
   boxSpacing.vertical = !isNaN(parseFloat(layoutConfig.boxSpacing.vertical)) ? layoutConfig.boxSpacing.vertical : layoutConfig.boxSpacing;
   layoutConfig.containerPadding = containerPadding;
-  layoutConfig.boxSpacing = boxSpacing; // Local
+  layoutConfig.boxSpacing = boxSpacing;
 
+  // Local
   layoutData._layoutItems = [];
   layoutData._awakeItems = [];
   layoutData._inViewportItems = [];
@@ -688,8 +672,9 @@ var lib = function (input, config) {
   layoutData._containerHeight = layoutConfig.containerPadding.top;
   layoutData._rows = [];
   layoutData._orphans = [];
-  layoutConfig._widowCount = 0; // Convert widths and heights to aspect ratios if we need to
+  layoutConfig._widowCount = 0;
 
+  // Convert widths and heights to aspect ratios if we need to
   return computeLayout(layoutConfig, layoutData, input.map(function (item) {
     if (item.width && item.height) {
       return {
@@ -701,10 +686,12 @@ var lib = function (input, config) {
       };
     }
   }));
-};
+}
+var betterJustifiedLayout = index;
+var justifiedLayout = /*@__PURE__*/getDefaultExportFromCjs(betterJustifiedLayout);
 
 function ready(callback) {
-  if ('complete' === document.readyState || 'interactive' === document.readyState) {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
     // Already ready or interactive, execute callback
     callback();
   } else {
@@ -717,20 +704,17 @@ function ready(callback) {
 }
 
 /* eslint-disable import/no-mutable-exports */
-
 /* eslint-disable no-restricted-globals */
 let win;
-
-if ('undefined' !== typeof window) {
+if (typeof window !== 'undefined') {
   win = window;
-} else if ('undefined' !== typeof global) {
+} else if (typeof global !== 'undefined') {
   win = global;
-} else if ('undefined' !== typeof self) {
+} else if (typeof self !== 'undefined') {
   win = self;
 } else {
   win = {};
 }
-
 var global$1 = win;
 
 // get image dimensions
@@ -739,67 +723,57 @@ function getImgDimensions(img, cb) {
   let interval;
   let hasSize = false;
   let addedListeners = false;
-
   const onHasSize = () => {
     if (hasSize) {
       cb(hasSize);
       return;
-    } // check for non-zero, non-undefined naturalWidth
+    }
 
-
+    // check for non-zero, non-undefined naturalWidth
     if (!img.naturalWidth) {
       return;
     }
-
     hasSize = {
       width: img.naturalWidth,
       height: img.naturalHeight
     };
     cb(hasSize);
     clearInterval(interval);
-
     if (addedListeners) {
       // eslint-disable-next-line no-use-before-define
       removeListeners();
     }
   };
-
   const onLoaded = () => {
     onHasSize();
   };
-
   const onError = () => {
     onHasSize();
   };
-
   const checkSize = () => {
-    if (0 < img.naturalWidth) {
+    if (img.naturalWidth > 0) {
       onHasSize();
     }
   };
-
   const addListeners = () => {
     addedListeners = true;
     img.addEventListener('load', onLoaded);
     img.addEventListener('error', onError);
   };
-
   const removeListeners = () => {
     addedListeners = false;
     img.removeEventListener('load', onLoaded);
     img.removeEventListener('error', onError);
   };
-
   checkSize();
-
   if (!hasSize) {
     addListeners();
     interval = setInterval(checkSize, 100);
   }
 }
 
+// list with all fjGallery instances
 // need to render all in one scroll/resize event
-
 const fjGalleryList = [];
 const updateFjGallery = /*#__PURE__*/rafSchd(() => {
   fjGalleryList.forEach(item => {
@@ -812,8 +786,9 @@ global$1.addEventListener('load', updateFjGallery);
 ready(() => {
   updateFjGallery();
 });
-let instanceID = 0; // fjGallery class
+let instanceID = 0;
 
+// fjGallery class
 class FJGallery {
   constructor(container, userOptions) {
     const self = this;
@@ -830,12 +805,14 @@ class FJGallery {
       rowHeightTolerance: 0.25,
       // [0, 1]
       maxRowsCount: Number.POSITIVE_INFINITY,
+      edgeCaseMinRowHeight: 0.5,
+      edgeCaseMaxRowHeight: 2.5,
       lastRow: 'left',
       // left, center, right, hide
       transitionDuration: '0.3s',
       calculateItemsHeight: false,
       resizeDebounce: 100,
-      isRtl: 'rtl' === self.css(self.$container, 'direction'),
+      isRtl: self.css(self.$container, 'direction') === 'rtl',
       // events
       onInit: null,
       // function() {}
@@ -846,57 +823,60 @@ class FJGallery {
       onBeforeJustify: null,
       // function() {}
       onJustify: null // function() {}
+    };
 
-    }; // prepare data-options
-
+    // prepare data-options
     const dataOptions = self.$container.dataset || {};
     const pureDataOptions = {};
     Object.keys(dataOptions).forEach(key => {
       const loweCaseOption = key.substr(0, 1).toLowerCase() + key.substr(1);
-
-      if (loweCaseOption && 'undefined' !== typeof self.defaults[loweCaseOption]) {
+      if (loweCaseOption && typeof self.defaults[loweCaseOption] !== 'undefined') {
         pureDataOptions[loweCaseOption] = dataOptions[key];
       }
     });
-    self.options = { ...self.defaults,
+    self.options = {
+      ...self.defaults,
       ...pureDataOptions,
       ...userOptions
     };
-    self.pureOptions = { ...self.options
-    }; // debounce for resize
+    self.pureOptions = {
+      ...self.options
+    };
 
+    // debounce for resize
     self.resize = debounce(self.options.resizeDebounce, self.resize);
     self.justify = rafSchd(self.justify.bind(self));
     self.init();
-  } // add styles to element
+  }
+
+  // add styles to element
   // eslint-disable-next-line class-methods-use-this
-
-
   css(el, styles) {
-    if ('string' === typeof styles) {
+    if (typeof styles === 'string') {
       return global$1.getComputedStyle(el).getPropertyValue(styles);
     }
-
     Object.keys(styles).forEach(key => {
       el.style[key] = styles[key];
     });
     return el;
-  } // set temporary transition with event listener
+  }
 
-
+  // set temporary transition with event listener
   applyTransition($item, properties) {
-    const self = this; // Remove previous event listener
+    const self = this;
 
-    self.onTransitionEnd($item)(); // Add transitions
+    // Remove previous event listener
+    self.onTransitionEnd($item)();
 
+    // Add transitions
     self.css($item, {
       'transition-property': properties.join(', '),
       'transition-duration': self.options.transitionDuration
-    }); // Add event listener
+    });
 
+    // Add event listener
     $item.addEventListener('transitionend', self.onTransitionEnd($item, properties), false);
   }
-
   onTransitionEnd($item) {
     const self = this;
     return () => {
@@ -906,15 +886,15 @@ class FJGallery {
       });
       $item.removeEventListener('transitionend', self.onTransitionEnd($item));
     };
-  } // add to fjGallery instances list
+  }
 
-
+  // add to fjGallery instances list
   addToFjGalleryList() {
     fjGalleryList.push(this);
     updateFjGallery();
-  } // remove from fjGallery instances list
+  }
 
-
+  // remove from fjGallery instances list
   removeFromFjGalleryList() {
     const self = this;
     fjGalleryList.forEach((item, key) => {
@@ -923,35 +903,33 @@ class FJGallery {
       }
     });
   }
-
   init() {
     const self = this;
     self.appendImages(self.$container.querySelectorAll(self.options.itemSelector));
-    self.addToFjGalleryList(); // call onInit event
+    self.addToFjGalleryList();
 
+    // call onInit event
     if (self.options.onInit) {
       self.options.onInit.call(self);
     }
-  } // append images
+  }
 
-
+  // append images
   appendImages($images) {
-    const self = this; // check if jQuery
+    const self = this;
 
+    // check if jQuery
     if (global$1.jQuery && $images instanceof global$1.jQuery) {
       $images = $images.get();
     }
-
     if (!$images || !$images.length) {
       return;
     }
-
     $images.forEach($item => {
       // if $images is jQuery, for some reason in this array there is undefined item, that not a DOM,
       // so we need to check for $item.querySelector.
       if ($item && !$item.fjGalleryImage && $item.querySelector) {
         const $image = $item.querySelector(self.options.imageSelector);
-
         if ($image) {
           $item.fjGalleryImage = self;
           const data = {
@@ -959,7 +937,6 @@ class FJGallery {
             $image,
             width: parseFloat($image.getAttribute('width')) || false,
             height: parseFloat($image.getAttribute('height')) || false,
-
             loadSizes() {
               const itemData = this;
               getImgDimensions($image, dimensions => {
@@ -970,31 +947,30 @@ class FJGallery {
                 }
               });
             }
-
           };
           data.loadSizes();
           self.images.push(data);
         }
       }
-    }); // call onAppendImages event
+    });
 
+    // call onAppendImages event
     if (self.options.onAppendImages) {
       self.options.onAppendImages.call(self, [$images]);
     }
-
     self.justify();
-  } // justify images
+  }
 
-
+  // justify images
   justify() {
     const self = this;
     const justifyArray = [];
-    self.justifyCount = (self.justifyCount || 0) + 1; // call onBeforeJustify event
+    self.justifyCount = (self.justifyCount || 0) + 1;
 
+    // call onBeforeJustify event
     if (self.options.onBeforeJustify) {
       self.options.onBeforeJustify.call(self);
     }
-
     self.images.forEach(data => {
       if (data.width && data.height) {
         justifyArray.push(data.width / data.height);
@@ -1012,109 +988,108 @@ class FJGallery {
       targetRowHeight: self.options.rowHeight,
       targetRowHeightTolerance: self.options.rowHeightTolerance,
       maxNumRows: self.options.maxRowsCount,
-      showWidows: 'hide' !== self.options.lastRow
+      edgeCaseMinRowHeight: self.options.edgeCaseMinRowHeight,
+      edgeCaseMaxRowHeight: self.options.edgeCaseMaxRowHeight,
+      showWidows: self.options.lastRow !== 'hide'
     };
-    const justifiedData = lib(justifyArray, justifiedOptions); // Align last row
+    const justifiedData = justifiedLayout(justifyArray, justifiedOptions);
 
-    if (justifiedData.widowCount && ('center' === self.options.lastRow || 'right' === self.options.lastRow)) {
+    // Align last row
+    if (justifiedData.widowCount && (self.options.lastRow === 'center' || self.options.lastRow === 'right')) {
       const lastItemData = justifiedData.boxes[justifiedData.boxes.length - 1];
       let gapSize = justifiedOptions.containerWidth - lastItemData.width - lastItemData.left;
-
-      if ('center' === self.options.lastRow) {
+      if (self.options.lastRow === 'center') {
         gapSize /= 2;
       }
-
-      if ('right' === self.options.lastRow) {
+      if (self.options.lastRow === 'right') {
         gapSize -= justifiedOptions.containerPadding.right;
       }
-
       for (let i = 1; i <= justifiedData.widowCount; i += 1) {
         justifiedData.boxes[justifiedData.boxes.length - i].left = justifiedData.boxes[justifiedData.boxes.length - i].left + gapSize;
       }
-    } // RTL compatibility
+    }
 
-
+    // RTL compatibility
     if (self.options.isRtl) {
       justifiedData.boxes.forEach((boxData, i) => {
         justifiedData.boxes[i].left = justifiedOptions.containerWidth - justifiedData.boxes[i].left - justifiedData.boxes[i].width - justifiedOptions.containerPadding.right + justifiedOptions.containerPadding.left;
       });
     }
-
     let i = 0;
     let additionalTopOffset = 0;
-    const rowsMaxHeight = {}; // Set image sizes.
+    const rowsMaxHeight = {};
 
+    // Set image sizes.
     self.images.forEach((data, imgI) => {
       if (justifiedData.boxes[i] && data.width && data.height) {
         // calculate additional offset based on actual items height.
-        if (self.options.calculateItemsHeight && 'undefined' === typeof rowsMaxHeight[justifiedData.boxes[i].top] && Object.keys(rowsMaxHeight).length) {
+        if (self.options.calculateItemsHeight && typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' && Object.keys(rowsMaxHeight).length) {
           additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[imgI - 1].height;
         }
-
-        if (self.options.transitionDuration && 1 < self.justifyCount) {
+        if (self.options.transitionDuration && self.justifyCount > 1) {
           self.applyTransition(data.$item, ['transform']);
         }
-
         self.css(data.$item, {
           display: '',
           position: 'absolute',
           transform: `translateX(${justifiedData.boxes[i].left}px) translateY(${justifiedData.boxes[i].top + additionalTopOffset}px) translateZ(0)`,
           width: `${justifiedData.boxes[i].width}px`
-        }); // calculate actual items height.
+        });
 
+        // calculate actual items height.
         if (self.options.calculateItemsHeight) {
           const rect = data.$item.getBoundingClientRect();
-
-          if ('undefined' === typeof rowsMaxHeight[justifiedData.boxes[i].top] || rowsMaxHeight[justifiedData.boxes[i].top] < rect.height) {
+          if (typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' || rowsMaxHeight[justifiedData.boxes[i].top] < rect.height) {
             rowsMaxHeight[justifiedData.boxes[i].top] = rect.height;
           }
         }
-
         i += 1;
       } else {
         self.css(data.$item, {
           display: 'none'
         });
       }
-    }); // increase additional offset based on the latest row items height.
+    });
 
+    // increase additional offset based on the latest row items height.
     if (self.options.calculateItemsHeight && Object.keys(rowsMaxHeight).length) {
       additionalTopOffset += rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[justifiedData.boxes.length - 1].height;
     }
-
     if (self.options.transitionDuration) {
       self.applyTransition(self.$container, ['height']);
-    } // Set container height.
+    }
 
-
+    // Set container height.
     self.css(self.$container, {
       height: `${justifiedData.containerHeight + additionalTopOffset}px`
-    }); // call onJustify event
+    });
 
+    // call onJustify event
     if (self.options.onJustify) {
       self.options.onJustify.call(self);
     }
-  } // update options and resize gallery items
+  }
 
-
+  // update options and resize gallery items
   updateOptions(options) {
     const self = this;
-    self.options = { ...self.options,
+    self.options = {
+      ...self.options,
       ...options
     };
     self.justify();
   }
-
   destroy() {
     const self = this;
     self.removeFromFjGalleryList();
-    self.justifyCount = 0; // call onDestroy event
+    self.justifyCount = 0;
 
+    // call onDestroy event
     if (self.options.onDestroy) {
       self.options.onDestroy.call(self);
-    } // remove styles.
+    }
 
-
+    // remove styles.
     self.css(self.$container, {
       height: '',
       transition: ''
@@ -1127,36 +1102,34 @@ class FJGallery {
         width: '',
         height: ''
       });
-    }); // delete fjGalleryImage instance from images
+    });
 
+    // delete fjGalleryImage instance from images
     self.images.forEach(val => {
       delete val.$item.fjGalleryImage;
-    }); // delete fjGallery instance from container
+    });
 
+    // delete fjGallery instance from container
     delete self.$container.fjGallery;
   }
-
   resize() {
     const self = this;
     self.justify();
   }
+}
 
-} // global definition
-
-
+// global definition
 const fjGallery = function (items, options, ...args) {
   // check for dom element
   // thanks: http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
-  if ('object' === typeof HTMLElement ? items instanceof HTMLElement : items && 'object' === typeof items && null !== items && 1 === items.nodeType && 'string' === typeof items.nodeName) {
+  if (typeof HTMLElement === 'object' ? items instanceof HTMLElement : items && typeof items === 'object' && items !== null && items.nodeType === 1 && typeof items.nodeName === 'string') {
     items = [items];
   }
-
   const len = items.length;
   let k = 0;
   let ret;
-
   for (k; k < len; k += 1) {
-    if ('object' === typeof options || 'undefined' === typeof options) {
+    if (typeof options === 'object' || typeof options === 'undefined') {
       if (!items[k].fjGallery) {
         // eslint-disable-next-line new-cap
         items[k].fjGallery = new FJGallery(items[k], options);
@@ -1165,15 +1138,12 @@ const fjGallery = function (items, options, ...args) {
       // eslint-disable-next-line prefer-spread
       ret = items[k].fjGallery[options].apply(items[k].fjGallery, args);
     }
-
-    if ('undefined' !== typeof ret) {
+    if (typeof ret !== 'undefined') {
       return ret;
     }
   }
-
   return items;
 };
-
 fjGallery.constructor = FJGallery;
 
 module.exports = fjGallery;
