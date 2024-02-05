@@ -54,7 +54,7 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "justified-layout": "^4.1.0",
+    "better-justified-layout": "^1.0.0",
     "raf-schd": "^4.0.3",
     "throttle-debounce": "^5.0.0"
   }

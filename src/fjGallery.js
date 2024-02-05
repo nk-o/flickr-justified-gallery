@@ -1,6 +1,6 @@
 import { debounce } from 'throttle-debounce';
 import rafSchd from 'raf-schd';
-import justifiedLayout from 'justified-layout';
+import justifiedLayout from 'better-justified-layout';
 
 import domReady from './utils/ready';
 import global from './utils/global';
