@@ -291,7 +291,7 @@ class FJGallery {
         // calculate additional offset based on actual items height.
         if (
           self.options.calculateItemsHeight &&
-          typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' &&
+          typeof rowsMaxHeight[justifiedData.boxes[i].row] === 'undefined' &&
           Object.keys(rowsMaxHeight).length
         ) {
           additionalTopOffset +=
@@ -316,10 +316,10 @@ class FJGallery {
           const rect = data.$item.getBoundingClientRect();
 
           if (
-            typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' ||
-            rowsMaxHeight[justifiedData.boxes[i].top] < rect.height
+            typeof rowsMaxHeight[justifiedData.boxes[i].row] === 'undefined' ||
+            rowsMaxHeight[justifiedData.boxes[i].row] < rect.height
           ) {
-            rowsMaxHeight[justifiedData.boxes[i].top] = rect.height;
+            rowsMaxHeight[justifiedData.boxes[i].row] = rect.height;
           }
         }
 
