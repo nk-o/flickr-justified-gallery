@@ -137,18 +137,18 @@ $.fn.newFjGallery = fjGalleryPlugin // give $().newFjGallery the fjGallery funct
 
 Name | Type | Default | Description
 :--- | :--- | :------ | :----------
-itemSelector | string | `.fj-gallery-item` | Items selector.
-imageSelector | string | `img` | Image selector, will find in `itemSelector`.
-gutter | int/object | `10` | Gutter between items, supports object like `{ horizontal: 10, vertical: 10 }`.
-rowHeight | int | `320` | Rows height.
-rowHeightTolerance | float | `0.25` | How far row heights can stray from `rowHeight`. `0` would force rows to be the `rowHeight` exactly and would likely make it impossible to justify. The value must be between `0` and `1`.
-maxRowsCount | int | `Number.POSITIVE_INFINITY` | Limits the number of rows to show at this number regardless of how many items still need to be laid out.
-edgeCaseMinRowHeight | float | `0.5` | Sets the minimum height for each row in a layout, based on the `targetRowHeight`
-edgeCaseMaxRowHeight | float | `2.5` | Sets the maximum height for each row in a layout, based on the `targetRowHeight`
-lastRow | string | `left` | Last row align. Available values: `left`, `center`, `right`, `hide`.
-transitionDuration | string|bool | `0.3s` | Duration of the transition when items change position, set in a CSS time format. Set boolean `false` to disable transitions.
-calculateItemsHeight | bool | `false` | Calculate items height in order to support images captions and other content, so rows can be displayed properly.
-resizeDebounce | int | `100` | Window resize debounce timeout in `ms`.
+`itemSelector` | string | `.fj-gallery-item` | Items selector.
+`imageSelector` | string | `img` | Image selector, will find in `itemSelector`.
+`gutter` | int/object | `10` | Gutter between items, supports object like `{ horizontal: 10, vertical: 10 }`.
+`rowHeight` | int | `320` | Rows height.
+`rowHeightTolerance` | float | `0.25` | How far row heights can stray from `rowHeight`. `0` would force rows to be the `rowHeight` exactly and would likely make it impossible to justify. The value must be between `0` and `1`.
+`maxRowsCount` | int | `Number.POSITIVE_INFINITY` | Limits the number of rows to show at this number regardless of how many items still need to be laid out.
+`edgeCaseMinRowHeight` | float | `0.5` | Sets the minimum height for each row in a layout, based on the `targetRowHeight`
+`edgeCaseMaxRowHeight` | float | `2.5` | Sets the maximum height for each row in a layout, based on the `targetRowHeight`
+`lastRow` | string | `left` | Last row align. Available values: `left`, `center`, `right`, `hide`.
+`transitionDuration` | string|bool | `0.3s` | Duration of the transition when items change position, set in a CSS time format. Set boolean `false` to disable transitions.
+`calculateItemsHeight` | bool | `false` | Calculate items height in order to support image captions and other content, so rows can be displayed properly.
+`resizeDebounce` | int | `100` | Window resize debounce timeout in `ms`.
 
 ## Events
 
