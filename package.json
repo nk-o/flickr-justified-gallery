@@ -17,8 +17,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup --config --watch --sourcemap",
     "build": "rollup --config --sourcemap",
-    "js-lint": "eslint src/",
-    "js-lint-fix": "eslint --fix src/",
+    "lint": "eslint ./src",
+    "lint-fix": "eslint --fix ./src",
     "prepare": "husky install"
   },
   "repository": {
