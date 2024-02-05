@@ -48,7 +48,7 @@ class FJGallery {
       transitionDuration: '0.3s',
       calculateItemsHeight: false,
       resizeDebounce: 100,
-      isRtl: 'rtl' === self.css(self.$container, 'direction'),
+      isRtl: self.css(self.$container, 'direction') === 'rtl',
 
       // events
       onInit: null, // function() {}
@@ -63,7 +63,7 @@ class FJGallery {
     const pureDataOptions = {};
     Object.keys(dataOptions).forEach((key) => {
       const loweCaseOption = key.substr(0, 1).toLowerCase() + key.substr(1);
-      if (loweCaseOption && 'undefined' !== typeof self.defaults[loweCaseOption]) {
+      if (loweCaseOption && typeof self.defaults[loweCaseOption] !== 'undefined') {
         pureDataOptions[loweCaseOption] = dataOptions[key];
       }
     });
@@ -88,7 +88,7 @@ class FJGallery {
   // add styles to element
   // eslint-disable-next-line class-methods-use-this
   css(el, styles) {
-    if ('string' === typeof styles) {
+    if (typeof styles === 'string') {
       return global.getComputedStyle(el).getPropertyValue(styles);
     }
 
@@ -240,22 +240,22 @@ class FJGallery {
       targetRowHeight: self.options.rowHeight,
       targetRowHeightTolerance: self.options.rowHeightTolerance,
       maxNumRows: self.options.maxRowsCount,
-      showWidows: 'hide' !== self.options.lastRow,
+      showWidows: self.options.lastRow !== 'hide',
     };
     const justifiedData = justifiedLayout(justifyArray, justifiedOptions);
 
     // Align last row
     if (
       justifiedData.widowCount &&
-      ('center' === self.options.lastRow || 'right' === self.options.lastRow)
+      (self.options.lastRow === 'center' || self.options.lastRow === 'right')
     ) {
       const lastItemData = justifiedData.boxes[justifiedData.boxes.length - 1];
       let gapSize = justifiedOptions.containerWidth - lastItemData.width - lastItemData.left;
 
-      if ('center' === self.options.lastRow) {
+      if (self.options.lastRow === 'center') {
         gapSize /= 2;
       }
-      if ('right' === self.options.lastRow) {
+      if (self.options.lastRow === 'right') {
         gapSize -= justifiedOptions.containerPadding.right;
       }
 
@@ -287,14 +287,14 @@ class FJGallery {
         // calculate additional offset based on actual items height.
         if (
           self.options.calculateItemsHeight &&
-          'undefined' === typeof rowsMaxHeight[justifiedData.boxes[i].top] &&
+          typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' &&
           Object.keys(rowsMaxHeight).length
         ) {
           additionalTopOffset +=
             rowsMaxHeight[Object.keys(rowsMaxHeight).pop()] - justifiedData.boxes[imgI - 1].height;
         }
 
-        if (self.options.transitionDuration && 1 < self.justifyCount) {
+        if (self.options.transitionDuration && self.justifyCount > 1) {
           self.applyTransition(data.$item, ['transform']);
         }
 
@@ -312,7 +312,7 @@ class FJGallery {
           const rect = data.$item.getBoundingClientRect();
 
           if (
-            'undefined' === typeof rowsMaxHeight[justifiedData.boxes[i].top] ||
+            typeof rowsMaxHeight[justifiedData.boxes[i].top] === 'undefined' ||
             rowsMaxHeight[justifiedData.boxes[i].top] < rect.height
           ) {
             rowsMaxHeight[justifiedData.boxes[i].top] = rect.height;
@@ -407,13 +407,13 @@ const fjGallery = function (items, options, ...args) {
   // check for dom element
   // thanks: http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
   if (
-    'object' === typeof HTMLElement
+    typeof HTMLElement === 'object'
       ? items instanceof HTMLElement
       : items &&
-        'object' === typeof items &&
-        null !== items &&
-        1 === items.nodeType &&
-        'string' === typeof items.nodeName
+        typeof items === 'object' &&
+        items !== null &&
+        items.nodeType === 1 &&
+        typeof items.nodeName === 'string'
   ) {
     items = [items];
   }
@@ -423,7 +423,7 @@ const fjGallery = function (items, options, ...args) {
   let ret;
 
   for (k; k < len; k += 1) {
-    if ('object' === typeof options || 'undefined' === typeof options) {
+    if (typeof options === 'object' || typeof options === 'undefined') {
       if (!items[k].fjGallery) {
         // eslint-disable-next-line new-cap
         items[k].fjGallery = new FJGallery(items[k], options);
@@ -432,7 +432,7 @@ const fjGallery = function (items, options, ...args) {
       // eslint-disable-next-line prefer-spread
       ret = items[k].fjGallery[options].apply(items[k].fjGallery, args);
     }
-    if ('undefined' !== typeof ret) {
+    if (typeof ret !== 'undefined') {
       return ret;
     }
   }

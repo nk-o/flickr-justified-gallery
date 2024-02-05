@@ -35,7 +35,7 @@ function getImgDimensions(img, cb) {
     onHasSize();
   };
   const checkSize = () => {
-    if (0 < img.naturalWidth) {
+    if (img.naturalWidth > 0) {
       onHasSize();
     }
   };

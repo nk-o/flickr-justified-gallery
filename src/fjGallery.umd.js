@@ -4,7 +4,7 @@ import fjGallery from './fjGallery';
 const $ = global.jQuery;
 
 // jQuery support
-if ('undefined' !== typeof $) {
+if (typeof $ !== 'undefined') {
   // add data to jQuery .data('fjGallery')
   const oldInit = fjGallery.constructor.prototype.init;
   fjGallery.constructor.prototype.init = function () {
@@ -29,7 +29,7 @@ if ('undefined' !== typeof $) {
   const $Plugin = function (...args) {
     Array.prototype.unshift.call(args, this);
     const res = fjGallery.apply(global, args);
-    return 'object' !== typeof res ? res : this;
+    return typeof res !== 'object' ? res : this;
   };
   $Plugin.constructor = fjGallery.constructor;
 

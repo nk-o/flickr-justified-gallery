@@ -1,14 +1,13 @@
-import path from 'path';
-
+/* eslint-disable import/no-extraneous-dependencies */
 import { babel } from '@rollup/plugin-babel';
 import replace from '@rollup/plugin-replace';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import copy from 'rollup-plugin-copy';
-import browsersync from 'rollup-plugin-browsersync';
+import serve from 'rollup-plugin-serve';
 
-const { data } = require('json-file').read('./package.json');
+import data from './package.json' assert { type: 'json' };
 
 const year = new Date().getFullYear();
 
@@ -20,8 +19,8 @@ function getHeader() {
  */`;
 }
 
-const pathCore = path.join(__dirname, 'src/fjGallery.esm.js');
-const pathCoreUmd = path.join(__dirname, 'src/fjGallery.umd.js');
+const pathCore = './src/fjGallery.esm.js';
+const pathCoreUmd = './src/fjGallery.umd.js';
 
 const bundles = [
   // Core.
@@ -29,7 +28,7 @@ const bundles = [
     input: pathCore,
     output: {
       banner: getHeader(),
-      file: path.join(__dirname, 'dist/fjGallery.esm.js'),
+      file: './dist/fjGallery.esm.js',
       format: 'esm',
     },
   },
@@ -37,7 +36,7 @@ const bundles = [
     input: pathCore,
     output: {
       banner: getHeader(),
-      file: path.join(__dirname, 'dist/fjGallery.esm.min.js'),
+      file: './dist/fjGallery.esm.min.js',
       format: 'esm',
     },
   },
@@ -46,7 +45,7 @@ const bundles = [
     output: {
       banner: getHeader(),
       name: 'fjGallery',
-      file: path.join(__dirname, 'dist/fjGallery.js'),
+      file: './dist/fjGallery.js',
       format: 'umd',
     },
   },
@@ -55,7 +54,7 @@ const bundles = [
     output: {
       banner: getHeader(),
       name: 'fjGallery',
-      file: path.join(__dirname, 'dist/fjGallery.min.js'),
+      file: './dist/fjGallery.min.js',
       format: 'umd',
     },
   },
@@ -63,13 +62,13 @@ const bundles = [
     input: pathCore,
     output: {
       banner: getHeader(),
-      file: path.join(__dirname, 'dist/fjGallery.cjs'),
+      file: './dist/fjGallery.cjs',
       format: 'cjs',
     },
   },
 ];
 
-const isDev = () => 'dev' === process.env.NODE_ENV;
+const isDev = () => process.env.NODE_ENV === 'dev';
 const isUMD = (file) => file.includes('fjGallery.js');
 const isMinEnv = (file) => file.includes('.min.');
 const isSpecificEnv = (file) => isMinEnv(file);
@@ -105,10 +104,10 @@ configs[0].plugins.unshift(
 // Dev server.
 if (isDev()) {
   configs[configs.length - 1].plugins.push(
-    browsersync({
-      server: {
-        baseDir: ['demo', './'],
-      },
+    serve({
+      open: true,
+      contentBase: ['demo', './'],
+      port: 3002,
     })
   );
 }
