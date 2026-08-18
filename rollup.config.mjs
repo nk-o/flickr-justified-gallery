@@ -7,7 +7,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import copy from 'rollup-plugin-copy';
 import serve from 'rollup-plugin-serve';
 
-import data from './package.json' assert { type: 'json' };
+import data from './package.json' with { type: 'json' };
 
 const year = new Date().getFullYear();
 
