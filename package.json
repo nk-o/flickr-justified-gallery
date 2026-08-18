@@ -39,7 +39,7 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-terser": "^1.0.0",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
     "browserslist-config-nk": "^1.1.1",
     "cross-env": "^7.0.3",
