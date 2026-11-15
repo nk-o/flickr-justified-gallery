@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0] - Nov 16, 2026
+
+- changed resize handling: each gallery watches its own container with `ResizeObserver` and lays out again only when the container width changes, so a page builder or a sidebar that widens the container no longer leaves overlapping rows
+- fixed a gallery inside a hidden tab or accordion being laid out at zero width and opening squashed
+- fixed an endless relayout when the gallery height toggles the page scrollbar; the gallery now settles at the narrower width and stays inside its container
+- removed the global window `resize` and `orientationchange` listeners
+
 ## [2.2.0] - Feb 5, 2024
 
 - added `edgeCaseMinRowHeight` and `edgeCaseMaxRowHeight` options

@@ -1,6 +1,6 @@
 /*!
- * Flickr's Justified Gallery [fjGallery] v2.2.0 (https://flickr-justified-gallery.nkdev.info)
- * Copyright 2024 nK <https://nkdev.info>
+ * Flickr's Justified Gallery [fjGallery] v2.3.0 (https://flickr-justified-gallery.nkdev.info)
+ * Copyright 2026 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/flickr-justified-gallery/blob/master/LICENSE)
  */
 'use strict';
@@ -153,7 +153,7 @@ function throttle(delay, callback, options) {
  */
 
 function debounce(delay, callback, options) {
-  var _ref = options || {},
+  var _ref = {},
     _ref$atBegin = _ref.atBegin,
     atBegin = _ref$atBegin === void 0 ? false : _ref$atBegin;
   return throttle(delay, callback, {
@@ -500,7 +500,6 @@ function createNewRow(layoutConfig, layoutData) {
     targetRowHeightTolerance: layoutConfig.targetRowHeightTolerance,
     edgeCaseMinRowHeight: layoutConfig.edgeCaseMinRowHeight * layoutConfig.targetRowHeight,
     edgeCaseMaxRowHeight: layoutConfig.edgeCaseMaxRowHeight * layoutConfig.targetRowHeight,
-    rightToLeft: false,
     isBreakoutRow: isBreakoutRow,
     widowLayoutStyle: layoutConfig.widowLayoutStyle
   });
@@ -690,19 +689,6 @@ function index(input, config) {
 var betterJustifiedLayout = index;
 var justifiedLayout = /*@__PURE__*/getDefaultExportFromCjs(betterJustifiedLayout);
 
-function ready(callback) {
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    // Already ready or interactive, execute callback
-    callback();
-  } else {
-    document.addEventListener('DOMContentLoaded', callback, {
-      capture: true,
-      once: true,
-      passive: true
-    });
-  }
-}
-
 /* eslint-disable import/no-mutable-exports */
 /* eslint-disable no-restricted-globals */
 let win;
@@ -772,20 +758,8 @@ function getImgDimensions(img, cb) {
   }
 }
 
-// list with all fjGallery instances
-// need to render all in one scroll/resize event
-const fjGalleryList = [];
-const updateFjGallery = /*#__PURE__*/rafSchd(() => {
-  fjGalleryList.forEach(item => {
-    item.resize();
-  });
-});
-global$1.addEventListener('resize', updateFjGallery);
-global$1.addEventListener('orientationchange', updateFjGallery);
-global$1.addEventListener('load', updateFjGallery);
-ready(() => {
-  updateFjGallery();
-});
+// Longer than one turn of the scrollbar loop, debounce and transitions included.
+const SCROLLBAR_LOOP_TIME = 1000;
 let instanceID = 0;
 
 // fjGallery class
@@ -887,26 +861,79 @@ class FJGallery {
       $item.removeEventListener('transitionend', self.onTransitionEnd($item));
     };
   }
-
-  // add to fjGallery instances list
-  addToFjGalleryList() {
-    fjGalleryList.push(this);
-    updateFjGallery();
+  getView() {
+    return this.$container.ownerDocument.defaultView || global$1;
+  }
+  getContainerWidth() {
+    return this.$container.getBoundingClientRect().width;
   }
 
-  // remove from fjGallery instances list
-  removeFromFjGalleryList() {
+  // lay out again when the container width changes, not the window
+  observe() {
     const self = this;
-    fjGalleryList.forEach((item, key) => {
-      if (item.instanceID === self.instanceID) {
-        fjGalleryList.splice(key, 1);
+    const view = self.getView();
+    self.resizeObserver = new view.ResizeObserver(() => {
+      const width = self.getContainerWidth();
+      if (width && (self.isPending || !self.lastLayout || width !== self.lastLayout.width)) {
+        self.resize();
       }
     });
+    self.resizeObserver.observe(self.$container);
+
+    // late fonts change caption heights without changing the width
+    if (view.document.readyState !== 'complete') {
+      self.onWindowLoad = () => {
+        self.resize();
+      };
+      view.addEventListener('load', self.onWindowLoad, {
+        once: true
+      });
+    }
+  }
+  unobserve() {
+    const self = this;
+    if (self.resizeObserver) {
+      self.resizeObserver.disconnect();
+      self.resizeObserver = null;
+    }
+    if (self.onWindowLoad) {
+      self.getView().removeEventListener('load', self.onWindowLoad);
+      self.onWindowLoad = null;
+    }
+  }
+  rememberLayout(width) {
+    const self = this;
+    const view = self.getView();
+    if (!self.lastLayout || self.lastLayout.width !== width) {
+      self.beforeLayout = self.lastLayout;
+      self.lastLayout = {
+        width,
+        viewport: view.innerWidth,
+        scrollbar: view.innerWidth - view.document.documentElement.clientWidth,
+        time: view.performance.now()
+      };
+    }
+  }
+
+  // The page height can sit between its two scrollbar states: the wide layout
+  // brings the scrollbar, the narrow one it leaves loses it, and back. Items
+  // are placed in px, so the loop stops at the narrow layout, which fits.
+  isScrollbarLoop(width) {
+    const self = this;
+    const before = self.beforeLayout;
+    const last = self.lastLayout;
+    if (!before || !last) {
+      return false;
+    }
+    const view = self.getView();
+    const viewport = view.innerWidth;
+    const scrollbar = viewport - view.document.documentElement.clientWidth;
+    return width === before.width && width > last.width && viewport === before.viewport && viewport === last.viewport && scrollbar < last.scrollbar && view.performance.now() - last.time < SCROLLBAR_LOOP_TIME;
   }
   init() {
     const self = this;
     self.appendImages(self.$container.querySelectorAll(self.options.itemSelector));
-    self.addToFjGalleryList();
+    self.observe();
 
     // call onInit event
     if (self.options.onInit) {
@@ -965,6 +992,15 @@ class FJGallery {
   justify() {
     const self = this;
     const justifyArray = [];
+    const containerWidth = self.getContainerWidth();
+
+    // a hidden container keeps its layout until it gets a width again
+    if (!containerWidth) {
+      self.isPending = true;
+      return;
+    }
+    self.isPending = false;
+    self.rememberLayout(containerWidth);
     self.justifyCount = (self.justifyCount || 0) + 1;
 
     // call onBeforeJustify event
@@ -977,7 +1013,7 @@ class FJGallery {
       }
     });
     const justifiedOptions = {
-      containerWidth: self.$container.getBoundingClientRect().width,
+      containerWidth,
       containerPadding: {
         top: parseFloat(self.css(self.$container, 'padding-top')) || 0,
         right: parseFloat(self.css(self.$container, 'padding-right')) || 0,
@@ -1081,7 +1117,9 @@ class FJGallery {
   }
   destroy() {
     const self = this;
-    self.removeFromFjGalleryList();
+    self.unobserve();
+    self.resize.cancel();
+    self.justify.cancel();
     self.justifyCount = 0;
 
     // call onDestroy event
@@ -1114,6 +1152,10 @@ class FJGallery {
   }
   resize() {
     const self = this;
+    const width = self.getContainerWidth();
+    if (!width || self.isScrollbarLoop(width)) {
+      return;
+    }
     self.justify();
   }
 }
