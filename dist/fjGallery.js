@@ -762,8 +762,8 @@
     }
   }
 
-  // Longer than one turn of the scrollbar loop, debounce and transitions included.
-  const SCROLLBAR_LOOP_TIME = 1000;
+  const SCROLLBAR_LOOP_MARGIN = 600;
+  const MAX_SCROLLBAR_WIDTH = 30;
   let instanceID = 0;
 
   // fjGallery class
@@ -868,21 +868,52 @@
     getView() {
       return this.$container.ownerDocument.defaultView || global$1;
     }
-    getContainerWidth() {
-      return this.$container.getBoundingClientRect().width;
+
+    // untransformed, so a popup that opens with a zoom does not read as a resize
+    getWidth() {
+      return this.$container.offsetWidth;
     }
 
-    // lay out again when the container width changes, not the window
+    // Window to recognize the scrollbar loop in: one turn of it takes the
+    // debounce and the height transition.
+    getLoopTime() {
+      const {
+        resizeDebounce,
+        transitionDuration
+      } = this.options;
+      const transition = typeof transitionDuration === 'string' ? parseFloat(transitionDuration) * (/ms$/.test(transitionDuration) ? 1 : 1000) || 0 : 0;
+      return (parseFloat(resizeDebounce) || 0) + transition + SCROLLBAR_LOOP_MARGIN;
+    }
+    needsResize() {
+      const self = this;
+      const width = self.getWidth();
+      if (!width) {
+        return false;
+      }
+      if (self.isPending || !self.lastLayout || width !== self.lastLayout.width) {
+        return true;
+      }
+      return self.options.calculateItemsHeight && self.images.some(data => typeof data.layoutHeight !== 'undefined' && data.$item.offsetHeight !== data.layoutHeight);
+    }
+
+    // lay out again when the container width or, with `calculateItemsHeight`,
+    // an item height changes, not the window
     observe() {
       const self = this;
       const view = self.getView();
-      self.resizeObserver = new view.ResizeObserver(() => {
-        const width = self.getContainerWidth();
-        if (width && (self.isPending || !self.lastLayout || width !== self.lastLayout.width)) {
-          self.resize();
-        }
-      });
-      self.resizeObserver.observe(self.$container);
+
+      // absent in jsdom
+      if (view.ResizeObserver) {
+        self.resizeObserver = new view.ResizeObserver(() => {
+          if (self.needsResize()) {
+            self.resize();
+          }
+        });
+        self.resizeObserver.observe(self.$container);
+        self.images.forEach(data => {
+          self.observeItem(data.$item);
+        });
+      }
 
       // late fonts change caption heights without changing the width
       if (view.document.readyState !== 'complete') {
@@ -892,6 +923,12 @@
         view.addEventListener('load', self.onWindowLoad, {
           once: true
         });
+      }
+    }
+    observeItem($item) {
+      const self = this;
+      if (self.resizeObserver && self.options.calculateItemsHeight) {
+        self.resizeObserver.observe($item);
       }
     }
     unobserve() {
@@ -905,23 +942,24 @@
         self.onWindowLoad = null;
       }
     }
-    rememberLayout(width) {
+    rememberLayout(width, layoutWidth) {
       const self = this;
       const view = self.getView();
       if (!self.lastLayout || self.lastLayout.width !== width) {
         self.beforeLayout = self.lastLayout;
         self.lastLayout = {
           width,
+          layoutWidth,
           viewport: view.innerWidth,
-          scrollbar: view.innerWidth - view.document.documentElement.clientWidth,
           time: view.performance.now()
         };
       }
     }
 
-    // The page height can sit between its two scrollbar states: the wide layout
-    // brings the scrollbar, the narrow one it leaves loses it, and back. Items
-    // are placed in px, so the loop stops at the narrow layout, which fits.
+    // The gallery height can sit between the two states of a scrollbar around
+    // it: the wide layout brings the scrollbar, the narrow one it leaves loses
+    // it, and back. Items are placed in px, so the loop stops at the narrow
+    // layout, which fits, and keeps it until the width changes again.
     isScrollbarLoop(width) {
       const self = this;
       const before = self.beforeLayout;
@@ -931,8 +969,7 @@
       }
       const view = self.getView();
       const viewport = view.innerWidth;
-      const scrollbar = viewport - view.document.documentElement.clientWidth;
-      return width === before.width && width > last.width && viewport === before.viewport && viewport === last.viewport && scrollbar < last.scrollbar && view.performance.now() - last.time < SCROLLBAR_LOOP_TIME;
+      return width === before.width && width > last.width && width - last.width <= MAX_SCROLLBAR_WIDTH && viewport === before.viewport && viewport === last.viewport && view.performance.now() - last.time < self.getLoopTime();
     }
     init() {
       const self = this;
@@ -981,6 +1018,7 @@
             };
             data.loadSizes();
             self.images.push(data);
+            self.observeItem($item);
           }
         }
       });
@@ -996,15 +1034,22 @@
     justify() {
       const self = this;
       const justifyArray = [];
-      const containerWidth = self.getContainerWidth();
+      const width = self.getWidth();
+      const view = self.getView();
 
       // a hidden container keeps its layout until it gets a width again
-      if (!containerWidth) {
+      if (!width) {
         self.isPending = true;
         return;
       }
       self.isPending = false;
-      self.rememberLayout(containerWidth);
+      let containerWidth = self.$container.getBoundingClientRect().width;
+      if (self.pin && self.pin.width === width && self.pin.viewport === view.innerWidth) {
+        containerWidth = self.pin.layoutWidth;
+      } else {
+        self.pin = null;
+        self.rememberLayout(width, containerWidth);
+      }
       self.justifyCount = (self.justifyCount || 0) + 1;
 
       // call onBeforeJustify event
@@ -1079,12 +1124,14 @@
           // calculate actual items height.
           if (self.options.calculateItemsHeight) {
             const rect = data.$item.getBoundingClientRect();
+            data.layoutHeight = data.$item.offsetHeight;
             if (typeof rowsMaxHeight[justifiedData.boxes[i].row] === 'undefined' || rowsMaxHeight[justifiedData.boxes[i].row] < rect.height) {
               rowsMaxHeight[justifiedData.boxes[i].row] = rect.height;
             }
           }
           i += 1;
         } else {
+          delete data.layoutHeight;
           self.css(data.$item, {
             display: 'none'
           });
@@ -1156,9 +1203,17 @@
     }
     resize() {
       const self = this;
-      const width = self.getContainerWidth();
-      if (!width || self.isScrollbarLoop(width)) {
+      const width = self.getWidth();
+      if (!width) {
+        self.isPending = true;
         return;
+      }
+      if (self.isScrollbarLoop(width)) {
+        self.pin = {
+          width,
+          viewport: self.getView().innerWidth,
+          layoutWidth: self.lastLayout.layoutWidth
+        };
       }
       self.justify();
     }
