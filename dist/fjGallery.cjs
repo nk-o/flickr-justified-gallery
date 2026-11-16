@@ -881,10 +881,11 @@ class FJGallery {
     const view = this.getView();
     const root = view.document.documentElement;
     let total = view.innerWidth - root.clientWidth;
-    let parent = this.$container.parentElement;
+    const getParent = el => el.parentElement || el.parentNode && el.parentNode.host || null;
+    let parent = getParent(this.$container);
     while (parent && parent !== root) {
       total += parent.offsetWidth - parent.clientWidth;
-      parent = parent.parentElement;
+      parent = getParent(parent);
     }
     return total;
   }
