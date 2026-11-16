@@ -6,7 +6,6 @@ import global from './utils/global';
 import getImgDimensions from './utils/get-img-dimensions';
 
 const SCROLLBAR_LOOP_MARGIN = 600;
-const MAX_SCROLLBAR_WIDTH = 30;
 
 let instanceID = 0;
 
@@ -124,6 +123,29 @@ class FJGallery {
     return this.$container.offsetWidth;
   }
 
+  // the fractional box width keeps 2.2.0 output, unless a transform scales it
+  getLayoutWidth() {
+    const rectWidth = this.$container.getBoundingClientRect().width;
+    const width = this.getWidth();
+
+    return Math.abs(rectWidth - width) < 1 ? rectWidth : width;
+  }
+
+  // Width taken by the scrollbars of the page and of every scrolling parent.
+  getScrollbarsWidth() {
+    const view = this.getView();
+    const root = view.document.documentElement;
+    let total = view.innerWidth - root.clientWidth;
+    let parent = this.$container.parentElement;
+
+    while (parent && parent !== root) {
+      total += parent.offsetWidth - parent.clientWidth;
+      parent = parent.parentElement;
+    }
+
+    return total;
+  }
+
   // Window to recognize the scrollbar loop in: one turn of it takes the
   // debounce and the height transition.
   getLoopTime() {
@@ -136,28 +158,7 @@ class FJGallery {
     return (parseFloat(resizeDebounce) || 0) + transition + SCROLLBAR_LOOP_MARGIN;
   }
 
-  needsResize() {
-    const self = this;
-    const width = self.getWidth();
-
-    if (!width) {
-      return false;
-    }
-    if (self.isPending || !self.lastLayout || width !== self.lastLayout.width) {
-      return true;
-    }
-
-    return (
-      self.options.calculateItemsHeight &&
-      self.images.some(
-        (data) =>
-          typeof data.layoutHeight !== 'undefined' && data.$item.offsetHeight !== data.layoutHeight
-      )
-    );
-  }
-
-  // lay out again when the container width or, with `calculateItemsHeight`,
-  // an item height changes, not the window
+  // lay out again when the container width changes, not the window
   observe() {
     const self = this;
     const view = self.getView();
@@ -165,15 +166,22 @@ class FJGallery {
     // absent in jsdom
     if (view.ResizeObserver) {
       self.resizeObserver = new view.ResizeObserver(() => {
-        if (self.needsResize()) {
+        const width = self.getWidth();
+
+        if (width && (self.isPending || !self.lastLayout || width !== self.lastLayout.width)) {
           self.resize();
         }
       });
       self.resizeObserver.observe(self.$container);
-      self.images.forEach((data) => {
-        self.observeItem(data.$item);
-      });
     }
+
+    // captions can change height at a breakpoint without changing the width
+    self.onWindowResize = () => {
+      if (self.options.calculateItemsHeight) {
+        self.resize();
+      }
+    };
+    view.addEventListener('resize', self.onWindowResize);
 
     // late fonts change caption heights without changing the width
     if (view.document.readyState !== 'complete') {
@@ -184,23 +192,17 @@ class FJGallery {
     }
   }
 
-  observeItem($item) {
-    const self = this;
-
-    if (self.resizeObserver && self.options.calculateItemsHeight) {
-      self.resizeObserver.observe($item);
-    }
-  }
-
   unobserve() {
     const self = this;
+    const view = self.getView();
 
     if (self.resizeObserver) {
       self.resizeObserver.disconnect();
       self.resizeObserver = null;
     }
+    view.removeEventListener('resize', self.onWindowResize);
     if (self.onWindowLoad) {
-      self.getView().removeEventListener('load', self.onWindowLoad);
+      view.removeEventListener('load', self.onWindowLoad);
       self.onWindowLoad = null;
     }
   }
@@ -215,6 +217,7 @@ class FJGallery {
         width,
         layoutWidth,
         viewport: view.innerWidth,
+        scrollbars: self.getScrollbarsWidth(),
         time: view.performance.now(),
       };
     }
@@ -237,11 +240,11 @@ class FJGallery {
     const viewport = view.innerWidth;
 
     return (
-      width === before.width &&
+      Math.abs(width - before.width) <= 1 &&
       width > last.width &&
-      width - last.width <= MAX_SCROLLBAR_WIDTH &&
       viewport === before.viewport &&
       viewport === last.viewport &&
+      self.getScrollbarsWidth() < last.scrollbars &&
       view.performance.now() - last.time < self.getLoopTime()
     );
   }
@@ -299,7 +302,6 @@ class FJGallery {
           data.loadSizes();
 
           self.images.push(data);
-          self.observeItem($item);
         }
       }
     });
@@ -327,7 +329,8 @@ class FJGallery {
 
     self.isPending = false;
 
-    let containerWidth = self.$container.getBoundingClientRect().width;
+    const layoutWidth = self.getLayoutWidth();
+    let containerWidth = layoutWidth;
 
     if (self.pin && self.pin.width === width && self.pin.viewport === view.innerWidth) {
       containerWidth = self.pin.layoutWidth;
@@ -392,7 +395,7 @@ class FJGallery {
     if (self.options.isRtl) {
       justifiedData.boxes.forEach((boxData, i) => {
         justifiedData.boxes[i].left =
-          justifiedOptions.containerWidth -
+          layoutWidth -
           justifiedData.boxes[i].left -
           justifiedData.boxes[i].width -
           justifiedOptions.containerPadding.right +
@@ -434,8 +437,6 @@ class FJGallery {
         if (self.options.calculateItemsHeight) {
           const rect = data.$item.getBoundingClientRect();
 
-          data.layoutHeight = data.$item.offsetHeight;
-
           if (
             typeof rowsMaxHeight[justifiedData.boxes[i].row] === 'undefined' ||
             rowsMaxHeight[justifiedData.boxes[i].row] < rect.height
@@ -446,7 +447,6 @@ class FJGallery {
 
         i += 1;
       } else {
-        delete data.layoutHeight;
         self.css(data.$item, {
           display: 'none',
         });
