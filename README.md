@@ -148,7 +148,7 @@ Name | Type | Default | Description
 `lastRow` | string | `left` | Last row align. Available values: `left`, `center`, `right`, `hide`.
 `transitionDuration` | string|bool | `0.3s` | Duration of the transition when items change position, set in a CSS time format. Set boolean `false` to disable transitions.
 `calculateItemsHeight` | bool | `false` | Calculate items height in order to support image captions and other content, so rows can be displayed properly.
-`resizeDebounce` | int | `100` | Window resize debounce timeout in `ms`.
+`resizeDebounce` | int | `100` | Delay in `ms` before the gallery is laid out again after its container changes width.
 
 ## Events
 
@@ -166,7 +166,7 @@ onJustify | Called after images justified.
 
 Name | Result | Description
 :--- | :----- | :----------
-resize | - | Justify images and container. Called on window resize and load.
+resize | - | Justify images and container. Called when the container changes width and on window load.
 appendImages | - | Called after you appended new items in the gallery container, required 1 argument with new items array.
 updateOptions | - | Update current gallery options and recalculate it, required 1 argument with new options.
 destroy | - | Destroy fjGallery and set block as it was before plugin init.

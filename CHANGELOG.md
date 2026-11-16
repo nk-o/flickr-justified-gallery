@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.0] - Nov 16, 2026
+
+- changed resize handling: each gallery watches its own container with `ResizeObserver` and lays out again only when the container width changes, so a page builder or a sidebar that widens the container no longer leaves overlapping rows
+- fixed a gallery inside a hidden tab or accordion being laid out at zero width and opening squashed
+- fixed an endless relayout when the gallery height toggles the page scrollbar; this covers scrollable parents too, and the gallery settles at the narrower width and stays inside its container
+- removed the global window `resize` and `orientationchange` listeners; with `calculateItemsHeight` the gallery still lays out again on window resize, since captions can change height at a breakpoint
+- changed `onBeforeJustify` and `onJustify` to not fire while the container is hidden, and `onJustify` fires once on init instead of twice
+
 ## [2.2.0] - Feb 5, 2024
 
 - added `edgeCaseMinRowHeight` and `edgeCaseMaxRowHeight` options
