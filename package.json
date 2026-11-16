@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/nk-o/flickr-justified-gallery.git"
+    "url": "git+https://github.com/nk-o/flickr-justified-gallery.git"
   },
   "bugs": {
     "url": "https://github.com/nk-o/flickr-justified-gallery/issues"
