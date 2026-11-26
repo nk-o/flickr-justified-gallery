@@ -10,9 +10,11 @@
   "module": "dist/fjGallery.esm.js",
   "unpkg": "dist/fjGallery.min.js",
   "style": "dist/fjGallery.css",
+  "types": "typings/index.d.ts",
   "files": [
     "src",
-    "dist"
+    "dist",
+    "typings"
   ],
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup --config --watch --sourcemap",
