@@ -1,5 +1,5 @@
 /*!
- * Flickr's Justified Gallery [fjGallery] v2.3.0 (https://flickr-justified-gallery.nkdev.info)
+ * Flickr's Justified Gallery [fjGallery] v2.3.1 (https://flickr-justified-gallery.nkdev.info)
  * Copyright 2026 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/flickr-justified-gallery/blob/master/LICENSE)
  */

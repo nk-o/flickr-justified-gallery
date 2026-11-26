@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.3.1] - Nov 26, 2026
+
+- added TypeScript declarations for the gallery, its options, and its instance methods
+
 ## [2.3.0] - Nov 16, 2026
 
 - changed resize handling: each gallery watches its own container with `ResizeObserver` and lays out again only when the container width changes, so a page builder or a sidebar that widens the container no longer leaves overlapping rows
